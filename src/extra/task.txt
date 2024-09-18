@@ -1,0 +1,4 @@
+ <img
+          src="https://i.ibb.co/WvHvRY7/pexels-googledeepmind-17483870.jpg"
+          className="w-full"
+        />
