@@ -1,7 +1,7 @@
+import Reviews from "@/components/reviews/Reviews";
 import Banner from "@/components/ShareHome/Banner";
 import DynamicBooking from "@/components/ShareHome/DynamicBooking";
 import FeaturedServices from "@/components/ShareHome/FeaturedServices";
-import ReviewSection from "@/components/ShareHome/ReviewSection";
 
 const Home = () => {
   return (
@@ -9,7 +9,7 @@ const Home = () => {
       <Banner></Banner>
       <FeaturedServices></FeaturedServices>
       <DynamicBooking></DynamicBooking>
-      <ReviewSection></ReviewSection>
+      <Reviews></Reviews>
     </div>
   );
 };

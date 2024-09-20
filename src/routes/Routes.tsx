@@ -4,6 +4,7 @@ import App from "../App";
 import Register from "@/pages/Users/Register";
 import Service from "@/pages/Services/Services";
 import Login from "@/pages/Users/Login";
+import ServiceDetails from "@/pages/Services/serviceDetails";
 
 export const router = createBrowserRouter([
   {
@@ -18,7 +19,10 @@ export const router = createBrowserRouter([
         path: "/services",
         element: <Service />,
       },
-
+      {
+        path: "/services/:id",
+        element: <ServiceDetails />,
+      },
       {
         path: "/login",
         element: <Login></Login>,

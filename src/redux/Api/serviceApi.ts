@@ -18,6 +18,13 @@ const serviceApi = baseApi.injectEndpoints({
         method: "GET",
       }),
     }),
+       // Fetch a single product by ID
+       getServiceDetails: builder.query({
+        query: (id: string) => ({
+          url: `/services/${id}`,
+          method: "GET",
+        }),
+      }),
   }),
 });
-export const { useCreteServiceMutation, useGetAllServiceQuery } = serviceApi;
+export const { useCreteServiceMutation, useGetAllServiceQuery, useGetServiceDetailsQuery, } = serviceApi;
