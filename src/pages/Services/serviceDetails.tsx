@@ -18,11 +18,12 @@
 
 
 // src/pages/ServiceDetails.tsx
+import { RootState } from "@/redux/store";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchServiceDetails } from "../store/slices/serviceSlice";
+// import { fetchServiceDetails } from "../store/slices/serviceSlice";
 import { useParams } from "react-router-dom";
-import { RootState } from "../store";
+// import { RootState } from "../store";
 
 const ServiceDetails: React.FC = () => {
   const { serviceId } = useParams<{ serviceId: string }>(); // Get serviceId from URL params

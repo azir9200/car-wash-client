@@ -115,9 +115,12 @@ const Login = () => {
             </Link>
           </p>
         </div>
-        {/* <div className="text-center border  md:w-1/2 ">
-          <SocialLogin></SocialLogin>
-        </div> */}
+        <div className="text-center border  md:w-1/2 ">
+          <img
+            src="https://i.ibb.co/Kbt6HR3/istockphoto-1138947293-1024x1024.jpg"
+            alt="image"
+          />
+        </div>
       </div>
     </div>
   );
