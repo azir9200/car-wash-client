@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 
 const ServiceCard = (service: any) => {
+  
   return (
     <div>
       <div className="bg-white shadow-md rounded-md p-6">
@@ -29,7 +30,7 @@ const ServiceCard = (service: any) => {
 
         <button className=" bg-slate-500 w-full rounded-l-full">
           {" "}
-          <Link to={`/services/${service.id}`}>View Details</Link>
+          <Link to={`/services/${service.service._id}`}>View Details</Link>
         </button>
       </div>
     </div>

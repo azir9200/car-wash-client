@@ -20,7 +20,7 @@ const serviceApi = baseApi.injectEndpoints({
     }),
     // Fetch a single product by ID
     getServiceDetails: builder.query({
-      query: (id) => ({
+      query: (id: string) => ({
         url: `/services/${id}`,
         method: "GET",
       }),

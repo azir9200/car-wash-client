@@ -11,16 +11,18 @@ import { useDispatch, useSelector } from "react-redux";
 const SlotsList: React.FC = () => {
   const dispatch = useDispatch();
   const { data: slots, error, isLoading } = useGetAvailableSlotQuery(undefined);
-  const selectedSlot = useSelector((state: any) => state.slots.selectedSlot); // Adjust according to your state shape
+  console.log("slot", slots);
+  const selectedSlot = useSelector((state: any) => state.slots.selectedSlot);
+  console.log("object  slot", selectedSlot);
 
   useEffect(() => {
     if (slots) {
-      dispatch(setSlots(slots)); // Populate slots in Redux state
+      dispatch(setSlots(slots));
     }
   }, [slots, dispatch]);
 
   const handleSlotClick = (slotId: string) => {
-    dispatch(setSelectedSlot(slotId)); // Set selected slot in Redux state
+    dispatch(setSelectedSlot(slotId));
   };
 
   const handleBooking = () => {
@@ -38,7 +40,7 @@ const SlotsList: React.FC = () => {
   return (
     <div className="max-w-4xl mx-auto p-6">
       <h1 className="text-2xl font-bold mb-4">Available Slots</h1>
-      <div className="grid grid-cols-3 gap-4 mb-6">
+      {/* <div className="grid grid-cols-3 gap-4 mb-6">
         {slots.map((slot: any) => (
           <button
             key={slot._id}
@@ -53,7 +55,7 @@ const SlotsList: React.FC = () => {
             {slot.startTime} - {slot.endTime}
           </button>
         ))}
-      </div>
+      </div> */}
       <button
         onClick={handleBooking}
         disabled={!selectedSlot}
