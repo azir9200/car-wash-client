@@ -1,4 +1,102 @@
- <img
-          src="https://i.ibb.co/WvHvRY7/pexels-googledeepmind-17483870.jpg"
-          className="w-full"
-        />
+[
+  {
+    "name": "Premium Car Wash",
+    "description": "Comprehensive car wash service that includes interior and exterior cleaning.",
+    "price": 45.99,
+    "duration": 60,
+    "image": "https://i.ibb.co/xzMv4WT/pexels-koprivakart-3354648.jpg",
+    "isDeleted": false
+  },
+  {
+    "name": "Basic Car Wash",
+    "description": "A quick and efficient wash for everyday maintenance.",
+    "price": 15.99,
+    "duration": 20,
+   "image": "https://i.ibb.co/K9M5VXv/pexels-perfect-lens-6536963.jpg"
+    "isDeleted": false
+  },
+  {
+    "name": "Deluxe Wash",
+    "description": "An extended wash including exterior and interior cleaning.",
+    "price": 29.99,
+    "duration": 45,
+    "image": "https://i.ibb.co/wQ7S2DZ/pexels-maksim-romashkin-13812373.jpg",
+    "isDeleted": false
+  },
+  {
+    "name": "Ultimate Wash",
+    "description": "Full wash service with wax and underbody protection.",
+    "price": 49.99,
+    "duration": 60,
+    "image": "https://i.ibb.co/K2NdkkX/pexels-saurabh-wasaikar-143351-435798.jpg",
+    "isDeleted": false
+  },
+  {
+    "name": "Express Wax",
+    "description": "Fast wax application for a glossy finish and protection.",
+    "price": 24.99,
+    "duration": 30,
+    "image": "https://i.ibb.co/xz7yY8H/car-race-438467-1280.jpg",
+    "isDeleted": false
+  },
+  {
+    "name": "Interior Detailing",
+    "description": "Deep cleaning and conditioning of the car's interior surfaces.",
+    "price": 69.99,
+    "duration": 90,
+    "image": "https://i.ibb.co/Gpzr70j/francis-painchaud-v-P4x4bl1-Ew-unsplash.jpg",
+    "isDeleted": false
+  },
+  {
+    "name": "Exterior Detailing",
+    "description": "Comprehensive exterior cleaning, polishing, and protection.",
+    "price": 79.99,
+    "duration": 90,
+    "image": "https://i.ibb.co/BTDprsD/gokhan-topel-sypnr-Xo-Juo-unsplash.jpg",
+    "isDeleted": false
+  },
+
+
+  {
+    "name": "Full Detailing",
+    "description": "Complete inside and outside detailing for a showroom finish.",
+    "price": 149.99,
+    "duration": 180,
+    "image": "https://i.ibb.co/xghbSzH/pexels-tima-miroshnichenko-6873123.jpg",
+    "isDeleted": false
+  },
+
+
+  {
+    "name": "Headlight Restoration",
+    "description": "Clear cloudy headlights for improved visibility and aesthetics.",
+    "price": 39.99,
+    "duration": 45,
+    "image": "https://i.ibb.co/XzdRGcP/pavol-duracka-BPla4-XKMjr-U-unsplash.jpg",
+    "isDeleted": false
+  },
+  {
+    "name": "Engine Cleaning",
+    "description": "Thorough cleaning of the engine compartment for a fresh look.",
+    "price": 59.99,
+    "duration": 60,
+    "image": "https://example.com/images/engine-cleaning.jpg",
+    "isDeleted": false
+  },
+  {
+    "name": "Tire Shine",
+    "description": "Application of protective coating for shiny and well-maintained tires.",
+    "price": 12.99,
+    "duration": 15,
+    "image": "https://i.ibb.co/kK3sPZ1/pexels-tima-miroshnichenko-6872601.jpg",
+    "isDeleted": false
+  },
+  {
+    "name": "Wheel Cleaning",
+    "description": "Deep cleaning of wheels and rims to remove dirt and brake dust.",
+    "price": 34.99,
+    "duration": 30,
+     image: "https://i.ibb.co/tH6PP0v/pexels-sleepididthis-1740919.jpg",
+    "isDeleted": false
+  }
+]

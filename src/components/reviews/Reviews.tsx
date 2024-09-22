@@ -1,8 +1,10 @@
+// import { useGetAllReviewQuery } from "@/redux/Api/reviewApi";
 // import getAllReviews from "./data";
 // import ReviewCard from "./ReviewCard";
 
 // const Reviews = () => {
-//   const allReviews = getAllReviews();
+//     const { data: allReviews } = useGetAllReviewQuery(undefined);
+
 
 //   const reviews = allReviews.slice(0, 5);
 

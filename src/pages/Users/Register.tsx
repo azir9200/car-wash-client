@@ -17,13 +17,13 @@ const Register: React.FC = () => {
     (state) => state.register
   );
 
-  const [signUp, { isError, isSuccess }] = useSignUpMutation();
+  const [signUp] = useSignUpMutation();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const user = await signUp({ name, email, role, phone, address, password });
     console.log("user=>", user);
-    if (user || isSuccess) {
+    if (user ) {
       Swal.fire({
         position: "top-end",
         icon: "success",
@@ -31,7 +31,7 @@ const Register: React.FC = () => {
         showConfirmButton: false,
         timer: 1500,
       });
-    } else if (isError) {
+    } else if (!user) {
       Swal.fire({
         position: "top-end",
         icon: "error",
@@ -47,9 +47,9 @@ const Register: React.FC = () => {
       {/* Left Side (Form) */}
       <div className="w-full lg:w-1/2 flex items-center justify-center  bg-gray-100">
         <div className=" w-full py-0 rounded-lg shadow-xl ">
-          <form onSubmit={handleSubmit} className="">
+          <form onSubmit={handleSubmit} className="px-8">
             <div className="form-control">
-              <label className="block mb-1 font-semibold">Your Name</label>
+              <label className="block mb-1 font-semibold">Name</label>
               <input
                 type="text"
                 className="w-full px-4  border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -89,16 +89,6 @@ const Register: React.FC = () => {
               />
             </div>
             <div className="form-control">
-              <label className="block mb-1 font-semibold">Address</label>
-              <input
-                type="text"
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Enter your address"
-                value={address}
-                onChange={(e) => dispatch(setAddress(e.target.value))}
-              />
-            </div>
-            <div className="form-control">
               <label className="block mb-1 font-semibold">Role</label>
               <select
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -109,6 +99,16 @@ const Register: React.FC = () => {
                 <option value="User">User</option>
                 <option value="Admin">Admin</option>
               </select>
+            </div>
+            <div className="form-control">
+              <label className="block mb-1 font-semibold">Address</label>
+              <input
+                type="text"
+                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Enter your address"
+                value={address}
+                onChange={(e) => dispatch(setAddress(e.target.value))}
+              />
             </div>
             <div>
               <button
@@ -133,7 +133,7 @@ const Register: React.FC = () => {
         <img
           src="https://i.ibb.co/tCGG7fq/istockphoto-905301022-1024x1024.jpg"
           alt="Register"
-          className="object-cover w-full h-full"
+          className="object-cover w-full h-full "
         />
       </div>
     </div>

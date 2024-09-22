@@ -14,6 +14,7 @@ import {
   REGISTER,
 } from "redux-persist";
 import { baseApi } from "./Api/baseApi";
+import slotReducer from './features/slotSlice';
 
 const persistUserConfig = {
   key: "user",
@@ -27,6 +28,7 @@ export const store = configureStore({
     register: registerReducer,
     login: loginReducer,
     user: persistedUserReducer,
+    slots: slotReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

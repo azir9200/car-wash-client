@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+import { useGetUserQuery } from "@/redux/Api/authApi";
 import {
   useCreteReviewMutation,
   useGetAllReviewQuery,
@@ -11,11 +12,15 @@ const Reviews = () => {
   const [rating, setRating] = useState(0);
   const [feedback, setFeedback] = useState("");
   const { data: reviews } = useGetAllReviewQuery(undefined);
+
   const [submitReview] = useCreteReviewMutation();
+  const { data: getUser } = useGetUserQuery(undefined);
+  console.log("data user", getUser);
   const user = useSelector((state: any) => state.user);
+  console.log("user az", user);
 
   const handleReviewSubmit = async () => {
-    if (!user?.token) return alert("Please log in to submit a review.");
+    if (!user?.refreshToken) return alert("Please log in to submit a review.");
 
     try {
       await submitReview({ rating, feedback, userId: user.id });
@@ -104,8 +109,10 @@ const Reviews = () => {
         <p className="text-2xl text-yellow-400">
           {reviews?.length
             ? (
-                reviews.reduce((acc, review) => acc + review.rating, 0) /
-                reviews.length
+                reviews.reduce(
+                  (acc: any, review: { rating: any }) => acc + review.rating,
+                  0
+                ) / reviews.length
               ).toFixed(1)
             : "No ratings yet"}
           /5

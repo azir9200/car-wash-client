@@ -2,7 +2,7 @@ import { baseApi } from "./baseApi";
 
 const serviceApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    creteService: builder.mutation({
+    createService: builder.mutation({
       query: (data) => {
         return {
           method: "POST",
@@ -18,13 +18,17 @@ const serviceApi = baseApi.injectEndpoints({
         method: "GET",
       }),
     }),
-       // Fetch a single product by ID
-       getServiceDetails: builder.query({
-        query: (id: string) => ({
-          url: `/services/${id}`,
-          method: "GET",
-        }),
+    // Fetch a single product by ID
+    getServiceDetails: builder.query({
+      query: (id) => ({
+        url: `/services/${id}`,
+        method: "GET",
       }),
+    }),
   }),
 });
-export const { useCreteServiceMutation, useGetAllServiceQuery, useGetServiceDetailsQuery, } = serviceApi;
+export const {
+  useCreateServiceMutation,
+  useGetAllServiceQuery,
+  useGetServiceDetailsQuery,
+} = serviceApi;

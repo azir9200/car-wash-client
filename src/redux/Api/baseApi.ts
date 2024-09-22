@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
+import { setUser } from "@/redux/features/userSlice";
 import { RootState } from "@/redux/store";
 import {
   BaseQueryApi,
@@ -9,7 +8,6 @@ import {
   createApi,
   fetchBaseQuery,
 } from "@reduxjs/toolkit/query/react";
-import { setUser } from "../features/userSlice";
 
 const baseQuery = fetchBaseQuery({
   baseUrl: "http://localhost:5000/api",
@@ -18,7 +16,7 @@ const baseQuery = fetchBaseQuery({
     const token = (getState() as RootState).user.token;
 
     if (token) {
-      headers.set("authorization", `${token}`);
+      headers.set("Authorization", `${token}`);
     }
     return headers;
   },
@@ -31,7 +29,8 @@ const baseQueryWithRefreshToken: BaseQueryFn<
   let result = await baseQuery(args, api, extraOptions);
 
   if (result?.error?.status === 401) {
-    //* Send Refresh
+    console.log("Token expired, attempting to refresh...");
+
 
     console.log("base, token", result);
 

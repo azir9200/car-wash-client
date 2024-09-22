@@ -21,8 +21,7 @@ const ServiceCard = (service: any) => {
           </div>
           <div className="w-1/4 justify-end">
             <img
-              src="https://i.ibb.co/RhtVvnt/eyosias-g-RZ5s-J7-Hk-Xtw-unsplash.jpg"
-              alt="serviceImage"
+              src={service.service.image}
               className="w-full h-full rounded-tl-3xl text-end "
             />{" "}
           </div>
@@ -30,7 +29,7 @@ const ServiceCard = (service: any) => {
 
         <button className=" bg-slate-500 w-full rounded-l-full">
           {" "}
-          <Link to={`/services/${service._id}`}>View Details</Link>
+          <Link to={`/services/${service.id}`}>View Details</Link>
         </button>
       </div>
     </div>
