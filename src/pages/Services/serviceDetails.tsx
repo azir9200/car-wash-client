@@ -13,10 +13,10 @@ const ServiceDetails = () => {
   } = useGetServiceDetailsQuery(id || "");
   const service = serviceResponse?.data;
 
-  const { data: slotsResponse } = useGetAvailableSlotQuery(undefined); //
+  const { data: slotsResponse } = useGetAvailableSlotQuery(id); 
   const availableSlots = slotsResponse?.data || [];
-
   console.log("object,slot", availableSlots);
+  
   const [selectedSlot, setSelectedSlot] = useState<string | null>(null);
 
   useEffect(() => {

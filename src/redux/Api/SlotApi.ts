@@ -13,8 +13,8 @@ const slotApi = baseApi.injectEndpoints({
     }),
     //get service api
     getAvailableSlot: builder.query({
-      query: () => ({
-        url: "slot/available",
+      query: (serviceId) => ({
+        url: `slot/available?serviceId=${serviceId}`,
         method: "GET",
       }),
     }),
