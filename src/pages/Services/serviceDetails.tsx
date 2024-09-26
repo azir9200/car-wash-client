@@ -135,23 +135,25 @@ const ServiceDetails = () => {
   }
 
   return (
-    <div className="container mx-auto p-6">
-      <div className="lg:flex justify-between">
-        <div className="w-2/5">
+    <div className=" mx-auto ">
+      <div className="lg:flex justify-between bg-slate-200">
+        <div className="lg:w-2/5 bg-slate-250">
           <h1 className="text-4xl font-bold mb-6">{service.name}</h1>
           <p>{service.description}</p>
           <p className="font-semibold">Duration: {service.duration}</p>
           <p className="text-gray-600 mb-6">Price: ${service.price}</p>
         </div>
-        <div>
+        <div className="lg:w-3/5 ">
           <img
             src={service.image}
             alt={service.name}
-            className="lg:w-full lg:h-80 object-cover rounded-md mb-4"
+            className="lg:w- lg:h-80 object-cover rounded-md mb-4"
           />
         </div>
       </div>
-      <h2 className="text-2xl font-bold mb-4">Available Time Slots</h2>
+      <h2 className="text-2xl  font-bold mb-4">
+        Available Time Slots
+      </h2>
       <SlotsList availableSlots={availableSlots} serviceId={id} />
     </div>
   );

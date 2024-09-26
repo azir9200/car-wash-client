@@ -1,10 +1,14 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaBars, FaTimes, FaUser } from "react-icons/fa";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
 const Navbar = () => {
- 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const bookings = useSelector(
+    (state: RootState) => state.bookings.bookingArray
+  );
 
   return (
     <nav className="bg-slate-500 p-6 fixed top-0 left-0 w-full z-50">
@@ -23,10 +27,10 @@ const Navbar = () => {
             Home
           </Link>
           <Link
-            to="/services"
+            to="/bookings"
             className="text-white text-base font-medium hover:text-black"
           >
-            Bookings
+            Bookings: <span className="font-bold">{bookings.length}</span>
           </Link>
           <Link
             to="/services"
