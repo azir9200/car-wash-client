@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { RootState } from "@/redux/store";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { addBooking } from "@/redux/features/bookingSlice";
 import { useCreateBookingMutation } from "@/redux/Api/bookingApi";
 import { useAppSelector } from "@/redux/hooks";
@@ -11,21 +11,18 @@ interface BookingPageProps {
   selectedSlot: string;
 }
 
-const BookingPage: React.FC<BookingPageProps> = ({
-  serviceName,
-  selectedSlot,
-}) => {
+const BookingPage: React.FC<BookingPageProps> = ({}) => {
   const [userName, setUserName] = useState<string>("");
   const [userEmail, setUserEmail] = useState<string>("");
   const [payNowRedirectUrl, setPayNowRedirectUrl] = useState<string | null>(
     null
   );
 
-  console.log("service name", serviceName);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const bookings = useAppSelector((store) => store.bookings.bookingArray);
-  console.log("booking page", bookings);
+  const location = useLocation();
+  const { serviceName, selectedSlot } = location.state || {};
+  // console.log("service name", serviceName);
   const user = useAppSelector((state: RootState) => state.user);
   console.log("user Booking", user);
   const [createBooking] = useCreateBookingMutation();
@@ -33,14 +30,13 @@ const BookingPage: React.FC<BookingPageProps> = ({
   const handlePayNow = async () => {
     try {
       const bookingDetails = {
-        serviceId: serviceName,
+        serviceName,
         slotId: selectedSlot,
         vehicleType: "Car", // You can fetch or prompt this
         vehicleBrand: "Toyota", // Example data
         vehicleModel: "Corolla", // Example data
         date: new Date().toISOString().split("T")[0],
       };
-
       const response = await createBooking(bookingDetails).unwrap();
       if (response.success) {
         // Redirect to AAMARPAY for payment

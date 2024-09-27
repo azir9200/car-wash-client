@@ -9,7 +9,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
-const SlotsList = ({ serviceId, serviceName, userId }) => {
+const SlotsList = ({ serviceId, userId }) => {
   const [selectedSlot, setSelectedSlot] = useState<string | null>(null);
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
   const [vehicleType, setVehicleType] = useState<string>(""); // Track vehicle data
@@ -50,8 +50,6 @@ const SlotsList = ({ serviceId, serviceName, userId }) => {
   const handleBookService = async () => {
     if (selectedSlot && formattedDate) {
       try {
-        // dispatch(setBookingStatus("loading"));
-
         const bookingDetails = {
           serviceId,
           slotId: selectedSlot,
@@ -60,7 +58,7 @@ const SlotsList = ({ serviceId, serviceName, userId }) => {
           vehicleModel,
           date: formattedDate,
         };
-        // Perform the API call
+
         const response = await createBooking(bookingDetails).unwrap();
         console.log("Booking Details: azir", bookingDetails);
         if (response.success) {
@@ -75,26 +73,31 @@ const SlotsList = ({ serviceId, serviceName, userId }) => {
           );
           // dispatch(setBookingStatus("success"));
           Swal.fire({
-            position: "top-end",
+            position: "center",
             icon: "success",
-            title: "Registration is successful!",
+            title: "Slot Booking is successful!",
             showConfirmButton: false,
             timer: 1500,
           });
-          setSelectedSlot(null); // Reset selected slot
+          setSelectedSlot(null);
         }
         navigate("/bookings", {
           state: {
-            serviceName: serviceName,
-            selectedSlot: selectedSlot,
+            serviceName: response.data.serviceName, // Assuming this is available in the response
+            selectedSlot,
           },
         });
       } catch (error) {
-        // dispatch(setBookingStatus("failed"));
         console.error("Booking failed:", error);
       }
     } else {
-      alert("Please fill in all vehicle details.");
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Booking not success!",
+        showConfirmButton: false,
+        timer: 1500,
+      });
     }
   };
 
