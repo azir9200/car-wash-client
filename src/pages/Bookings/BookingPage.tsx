@@ -1,123 +1,121 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { RootState } from "@/redux/store";
-import { useLocation, useNavigate } from "react-router-dom";
-import { addBooking } from "@/redux/features/bookingSlice";
-import { useCreateBookingMutation } from "@/redux/Api/bookingApi";
-import { useAppSelector } from "@/redux/hooks";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
-interface BookingPageProps {
-  serviceName: string;
-  selectedSlot: string;
-}
+// Sample data to simulate selected service and slot
+const selectedService = {
+  name: "Premium Car Wash",
+  description: "A complete exterior and interior car wash service.",
+  price: 50, // Price in dollars or relevant currency
+};
 
-const BookingPage: React.FC<BookingPageProps> = ({}) => {
+const selectedSlot = {
+  startTime: "10:00 AM",
+  endTime: "11:00 AM",
+  date: "2024-09-28", // Auto-fill slot time
+};
+
+const BookingPage = () => {
   const [userName, setUserName] = useState<string>("");
   const [userEmail, setUserEmail] = useState<string>("");
-  const [payNowRedirectUrl, setPayNowRedirectUrl] = useState<string | null>(
-    null
-  );
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const location = useLocation();
-  const { serviceName, selectedSlot } = location.state || {};
-  // console.log("service name", serviceName);
-  const user = useAppSelector((state: RootState) => state.user);
-  console.log("user Booking", user);
-  const [createBooking] = useCreateBookingMutation();
 
-  const handlePayNow = async () => {
-    try {
-      const bookingDetails = {
-        serviceName,
-        slotId: selectedSlot,
-        vehicleType: "Car", // You can fetch or prompt this
-        vehicleBrand: "Toyota", // Example data
-        vehicleModel: "Corolla", // Example data
-        date: new Date().toISOString().split("T")[0],
-      };
-      const response = await createBooking(bookingDetails).unwrap();
-      if (response.success) {
-        // Redirect to AAMARPAY for payment
-        const aamarpayUrl = `https://sandbox.aamarpay.com/payment/request?payment_id=${response.data._id}&amount=${response.data.amount}&currency=BDT&success_url=${window.location.origin}/success`;
-        setPayNowRedirectUrl(aamarpayUrl);
+  const handlePayNow = () => {
+    // Redirect user to AAMARPAY payment processing page
+    Swal.fire({
+      position: "center",
+      icon: "success",
+      title: "Redirecting to AAMARPAY for payment...",
+      showConfirmButton: false,
+      timer: 1500,
+    });
 
-        // Dispatch booking to Redux
-        dispatch(addBooking(response.data));
-        // dispatch(setBookingStatus("success"));
-
-        // Redirect to AAMARPAY
-        window.location.href = aamarpayUrl;
-      }
-    } catch (error) {
-      // dispatch(setBookingStatus("failed"));
-      console.error("Error during booking or payment:", error);
-    }
+    // Simulate slot booking and payment flow
+    setTimeout(() => {
+      // Mark slot as "booked"
+      // Redirect to success page after payment
+      navigate("/payment-success");
+    }, 2000);
   };
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-6">
-      {/* Left Side: Service and Slot Details */}
-      <div className="bg-white shadow-lg rounded-lg p-6">
-        <h2 className="text-xl font-bold mb-4">Selected Service</h2>
-        <p className="mb-2">
-          <strong>Service Name:</strong> {serviceName}
+    <div className="flex flex-col md:flex-row justify-center p-8 gap-8">
+      {/* Left Side: Service Details */}
+      <div className="md:w-1/2 bg-white shadow-md p-6 rounded-lg">
+        <h2 className="text-2xl font-bold mb-4">{selectedService.name}</h2>
+        <p className="text-gray-600 mb-2">{selectedService.description}</p>
+        <p className="text-gray-800 font-semibold">
+          Price: ${selectedService.price}
         </p>
-        <p className="mb-2">
-          <strong>Time Slot:</strong> {selectedSlot}
+        <p className="text-gray-600">
+          Date: {selectedSlot.date} <br />
+          Time: {selectedSlot.startTime} - {selectedSlot.endTime}
         </p>
       </div>
 
-      {/* Right Side: Form for User Information */}
-      <div className="bg-gray-100 shadow-lg rounded-lg p-6">
-        <h2 className="text-xl font-bold mb-4">User Information</h2>
-        <form>
-          <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">Name:</label>
+      {/* Right Side: User Info Form */}
+      <div className="md:w-1/2 bg-white shadow-md p-6 rounded-lg">
+        <h3 className="text-xl font-semibold mb-4">Enter Your Information</h3>
+        <form className="space-y-4">
+          <div>
+            <label
+              htmlFor="name"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Name
+            </label>
             <input
+              id="name"
               type="text"
               value={userName}
               onChange={(e) => setUserName(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded"
+              className="mt-1 p-2 border w-full rounded"
               placeholder="Enter your name"
             />
           </div>
 
-          <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">Email:</label>
+          <div>
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Email
+            </label>
             <input
+              id="email"
               type="email"
               value={userEmail}
               onChange={(e) => setUserEmail(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded"
+              className="mt-1 p-2 border w-full rounded"
               placeholder="Enter your email"
             />
           </div>
 
-          <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">
-              Selected Time Slot:
+          <div>
+            <label
+              htmlFor="time"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Selected Time Slot
             </label>
             <input
+              id="time"
               type="text"
-              value={selectedSlot}
-              disabled
-              className="w-full p-2 border border-gray-300 rounded bg-gray-100"
+              value={`${selectedSlot.startTime} - ${selectedSlot.endTime}`}
+              readOnly
+              className="mt-1 p-2 border w-full rounded bg-gray-100"
             />
           </div>
-
-          {/* Pay Now Button */}
-          <div className="mt-6">
-            <button
-              type="button"
-              className="bg-blue-500 text-white py-2 px-4 rounded w-full"
-              onClick={handlePayNow}
-            >
-              Pay Now
-            </button>
-          </div>
         </form>
+
+        {/* Pay Now Button    /booking/my-bookings/${id} */}
+        <button
+          onClick={handlePayNow}
+          className="mt-6 w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition"
+        >
+          Pay Now
+        </button>
       </div>
     </div>
   );

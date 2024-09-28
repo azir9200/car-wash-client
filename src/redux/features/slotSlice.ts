@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { RootState } from "../store";
 
 const initialState = {
   selectedSlot: null as string | null,
@@ -28,4 +29,7 @@ const slotSlice = createSlice({
 });
 
 export const { setSelectedSlot, setSlots, bookSlot } = slotSlice.actions;
+export const selectCurrentSlot = (state: RootState) => {
+  return state.slots.slots;
+};
 export default slotSlice.reducer;

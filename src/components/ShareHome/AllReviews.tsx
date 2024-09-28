@@ -7,6 +7,7 @@ const AllReviews = () => {
   const { data: reviews, isLoading, isError } = useGetAllReviewQuery(undefined);
   const allReviews = reviews?.data;
   const navigate = useNavigate();
+  console.log("all review", allReviews);
 
   if (isLoading) {
     return <div className="text-center mt-10">Loading reviews...</div>;

@@ -7,11 +7,13 @@ import Login from "@/pages/Users/Login";
 import ServiceDetails from "@/pages/Services/serviceDetails";
 import BookingPage from "@/pages/Bookings/BookingPage";
 import AllReviews from "@/components/ShareHome/AllReviews";
+import ErrorPage from "@/components/ErrorPage/ErrorPage";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+    errorElement: <ErrorPage></ErrorPage>,
     children: [
       {
         index: true,
@@ -29,8 +31,9 @@ export const router = createBrowserRouter([
         path: "/services/:id",
         element: <ServiceDetails />,
       },
+
       {
-        path: "/bookings",
+        path: "bookings/:id",
         element: <BookingPage />,
       },
       {

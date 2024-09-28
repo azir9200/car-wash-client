@@ -9,6 +9,7 @@ interface UserState {
 const initialState: UserState = {
   token: "",
   user: {
+    name: "",
     email: "",
     role: "",
   },

@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker"; // For date selection
 import "react-datepicker/dist/react-datepicker.css";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const SlotsList = ({ serviceId, userId }) => {
@@ -18,6 +18,7 @@ const SlotsList = ({ serviceId, userId }) => {
   const formattedDate = selectedDate?.toISOString().split("T")[0];
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [slotTime, setSlotTime] = useState(null);
 
   const {
     data: slotsResponse,
@@ -27,7 +28,7 @@ const SlotsList = ({ serviceId, userId }) => {
   const [createBooking] = useCreateBookingMutation();
 
   const availableSlots = slotsResponse?.data || [];
-
+  console.log(serviceId, " service id");
   useEffect(() => {
     setSelectedSlot(null);
   }, [selectedDate]);
@@ -41,9 +42,10 @@ const SlotsList = ({ serviceId, userId }) => {
   }
 
   const handleSlotClick = (slotId: string) => {
-    const slot = availableSlots.find((slot) => slot._id === slotId);
+    const slot = availableSlots.find((slot: any) => slot._id === slotId);
     if (slot && !slot.booked) {
-      setSelectedSlot(slotId);
+      // setSelectedSlot(slot);
+      setSelectedSlot(slot._id);
     }
   };
 
@@ -60,18 +62,22 @@ const SlotsList = ({ serviceId, userId }) => {
         };
 
         const response = await createBooking(bookingDetails).unwrap();
-        console.log("Booking Details: azir", bookingDetails);
+
         if (response.success) {
           dispatch(
             addBooking({
-              _id: response.data._id,
+              _id: response.data._id, // Assuming _id is returned in response
               serviceId,
               slotId: selectedSlot,
-              vehicle: { vehicleType, vehicleBrand, vehicleModel },
+              vehicle: {
+                vehicleType,
+                vehicleBrand,
+                vehicleModel,
+              },
               date: formattedDate,
             })
           );
-          // dispatch(setBookingStatus("success"));
+
           Swal.fire({
             position: "center",
             icon: "success",
@@ -81,7 +87,7 @@ const SlotsList = ({ serviceId, userId }) => {
           });
           setSelectedSlot(null);
         }
-        navigate("/bookings", {
+        navigate(`/bookings/${serviceId}`, {
           state: {
             serviceName: response.data.serviceName, // Assuming this is available in the response
             selectedSlot,
@@ -164,12 +170,14 @@ const SlotsList = ({ serviceId, userId }) => {
         {/* Book This Service Button */}
         {selectedSlot && (
           <div className="mt-4">
-            <button
+            <Link
+              to={`/bookings/${serviceId}`}
               className="bg-blue-500 text-white py-2 px-4 rounded-lg"
               onClick={handleBookService} // Trigger booking
             >
               Book This Service
-            </button>
+            </Link>
+           
           </div>
         )}
       </div>
