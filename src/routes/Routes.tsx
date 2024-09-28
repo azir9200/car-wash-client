@@ -6,6 +6,7 @@ import Service from "@/pages/Services/Services";
 import Login from "@/pages/Users/Login";
 import ServiceDetails from "@/pages/Services/serviceDetails";
 import BookingPage from "@/pages/Bookings/BookingPage";
+import AllReviews from "@/components/ShareHome/AllReviews";
 
 export const router = createBrowserRouter([
   {
@@ -17,6 +18,10 @@ export const router = createBrowserRouter([
         element: <Home />,
       },
       {
+        path: "review",
+        element: <AllReviews />,
+      },
+      {
         path: "/services",
         element: <Service />,
       },
@@ -25,7 +30,7 @@ export const router = createBrowserRouter([
         element: <ServiceDetails />,
       },
       {
-        path : "/bookings",
+        path: "/bookings",
         element: <BookingPage />,
       },
       {

@@ -1,9 +1,13 @@
-import { useLoginMutation } from "@/redux/Api/authApi";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { setEmail, setPassword } from "@/redux/features/loginSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { RootState } from "@/redux/store";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import { setUser } from "@/redux/features/userSlice";
+import { useLoginMutation } from "@/redux/Api/authApi";
+import { verifyToken } from "@/redux/utils";
 
 const Login = () => {
   const dispatch = useAppDispatch();
@@ -11,57 +15,50 @@ const Login = () => {
   const [login] = useLoginMutation();
 
   const navigate = useNavigate();
-  const location = useLocation();
-  const from = location.state?.from?.pathname || "/";
+  // const location = useLocation;
+  // const from = location.state?.from?.pathname || "/";
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const result = await login({ email, password });
-      const { success, data } = result?.data || {};
+      const result = await login({ email, password }).unwrap();
+      console.log("user login", result);
 
-      if (success && data?.accessToken) {
-        const { accessToken } = data;
-        console.log("User access token:", accessToken);
-        console.log("User access:", result);
+      const user = verifyToken(result.data.accessToken);
+      dispatch(setUser({ user: user, token: result.data.accessToken }));
 
+      if (result.success && result.data?.accessToken) {
         Swal.fire({
-          title: "Your login Successful !",
-          showClass: {
-            popup: ` animate__animated animate__fadeInUp animate__faster  `,
-          },
-          hideClass: {
-            popup: ` animate__animated animate__fadeOutDown  animate__faster `,
-          },
+          position: "top-end",
+          icon: "success",
+          title: "Registration is successful!",
+          showConfirmButton: false,
+          timer: 1500,
         });
-        navigate(from, { replace: true });
+        navigate("/");
       } else {
-        throw new Error("Login failed. No access token.");
+        throw new Error(result.message || "Login failed. No access token.");
       }
-    } catch (error) {
-      console.error("Error during login:", error);
+    } catch (error: any) {
       Swal.fire({
         position: "top-end",
-        icon: "error",
-        title: "Registration failed! Please try again.",
+        icon: "success",
+        title: "Registration is successful!",
         showConfirmButton: false,
         timer: 1500,
       });
+      navigate("/");
     }
   };
 
   return (
-    <div className="w-full  bg-base-200">
-      <div>
-        <h1 className="text-3xl mb-8 text-center font-xl">Login First </h1>
-      </div>
-      <div className="lg:flex">
-        <div className=" md:w-1/2 rounded-xl shadow-2xl bg-base-100">
-          <form onSubmit={handleLogin} className="p-4">
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Email</span>
-              </label>
+    <div className="m-0 p-0 w-full ">
+      <h1 className="text-3xl bg-slate-200 text-center p-4">Login First </h1>
+
+      <div className="lg:flex items-center justify-center  bg-gray-400">
+        <div className="lg:w-1/2 p-4 shadow-md rounded-lg">
+          <form onSubmit={handleSubmit} className="space-y-6 px-8">
+            <div>
               <input
                 type="email"
                 className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -70,10 +67,7 @@ const Login = () => {
                 onChange={(e) => dispatch(setEmail(e.target.value))}
               />
             </div>
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Password</span>
-              </label>
+            <div>
               <input
                 type="password"
                 className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -81,32 +75,26 @@ const Login = () => {
                 value={password}
                 onChange={(e) => dispatch(setPassword(e.target.value))}
               />
-
-              <label className="label">
-                <a href="#" className="label-text-alt link link-hover">
-                  Forgot password?
-                </a>
-              </label>
             </div>
-            <div className="form-control mt-6">
-              <input
-                className="btn btn-success  text-2xl  "
+
+            <div>
+              <button
                 type="submit"
-                value="Login"
-              />
+                className="w-full px-4 py-2 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                Login
+              </button>
             </div>
           </form>
-          <p>
-            <Link to="/register">
-              {" "}
-              <div className="text-center text-lg">
-                Don't have a account yet ?{" "}
-                <span className="font-bold text-amber-800">Register</span>{" "}
-              </div>{" "}
+          <p className="text-sm text-center text-gray-600 mt-4">
+            New here?{" "}
+            <Link to="/register" className="text-blue-500 hover:underline">
+              register first
             </Link>
           </p>
         </div>
-        <div className="text-center border  md:w-1/2 ">
+
+        <div className=" lg:w-1/2 ">
           <img
             src="https://i.ibb.co/Kbt6HR3/istockphoto-1138947293-1024x1024.jpg"
             alt="image"
@@ -116,4 +104,5 @@ const Login = () => {
     </div>
   );
 };
+
 export default Login;

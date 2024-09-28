@@ -1,14 +1,16 @@
-import { createSlice } from "@reduxjs/toolkit";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 
-const initialState = {
+interface UserState {
+  user: any | null;
+  token: string | null;
+}
+const initialState: UserState = {
   token: "",
   user: {
-    _id: "",
     email: "",
     role: "",
-    exp: "",
-    iat: "",
   },
 };
 
@@ -19,25 +21,18 @@ const userSlice = createSlice({
     setToken: (state, action) => {
       state.token = action.payload;
     },
-    setUser: (state, action) => {
-      state.user = { ...action.payload };
+    setUser: (state, action: PayloadAction<{ user: any; token: string }>) => {
+      state.user = action.payload.user;
+      state.token = action.payload.token;
     },
     logout: (state) => {
-      state.token = "";  
-      state.user = {      
-        _id: "",
-        email: "",
-        role: "",
-        exp: "",
-        iat: "",
-      };
+      state.user = null;
+      state.token = null;
     },
   },
 });
 
-export const { setToken, setUser, } = userSlice.actions;
+export const { setToken, setUser, logout } = userSlice.actions;
 export default userSlice.reducer;
-
-
 export const useCurrentToken = (state: RootState) => state.user.token;
 export const selectCurrentUser = (state: RootState) => state.user.user;
