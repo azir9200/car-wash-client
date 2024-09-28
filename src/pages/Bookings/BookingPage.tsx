@@ -1,5 +1,7 @@
+import { setBookingDetails } from "@/redux/features/BookingsSlices";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Navigate, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 // Sample data to simulate selected service and slot
@@ -18,11 +20,26 @@ const selectedSlot = {
 const BookingPage = () => {
   const [userName, setUserName] = useState<string>("");
   const [userEmail, setUserEmail] = useState<string>("");
-
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handlePayNow = () => {
-    // Redirect user to AAMARPAY payment processing page
+    const bookingData = {
+      userName,
+      userEmail,
+      serviceName: selectedService.name,
+      serviceDescription: selectedService.description,
+      servicePrice: selectedService.price,
+      slotStartTime: selectedSlot.startTime,
+      slotEndTime: selectedSlot.endTime,
+      slotDate: selectedSlot.date,
+    };
+    // Dispatch the booking details to Redux store
+    dispatch(setBookingDetails(bookingData));
+
+    // Log booking data to console
+    console.log("Booking Info:", bookingData);
+    // Payment flow toast notification
     Swal.fire({
       position: "center",
       icon: "success",
@@ -33,11 +50,40 @@ const BookingPage = () => {
 
     // Simulate slot booking and payment flow
     setTimeout(() => {
-      // Mark slot as "booked"
-      // Redirect to success page after payment
-      navigate("/payment-success");
+      navigate(`/payment-success`);
     }, 2000);
   };
+
+  // // Redirect user to AAMARPAY payment processing page
+  // dispatch(
+  //   setBookingDetails({
+  //     userName,
+  //     userEmail,
+  //     serviceName: selectedService.name,
+  //     serviceDescription: selectedService.description,
+  //     servicePrice: selectedService.price,
+  //     slotStartTime: selectedSlot.startTime,
+  //     slotEndTime: selectedSlot.endTime,
+  //     slotDate: selectedSlot.date,
+  //   })
+  // );
+  // console.log("Booking Ingo", setBookingDetails);
+  // // payment flow toast
+  // Swal.fire({
+  //   position: "center",
+  //   icon: "success",
+  //   title: "Redirecting to AAMARPAY for payment...",
+  //   showConfirmButton: false,
+  //   timer: 1500,
+  // });
+
+  // Simulate slot booking and payment flow
+  //   setTimeout(() => {
+  //     // Mark slot as "booked"
+  //     // Redirect to success page after payment
+  //     navigate(`/payment-success`);
+  //   }, 2000);
+  // };
 
   return (
     <div className="flex flex-col md:flex-row justify-center p-8 gap-8">

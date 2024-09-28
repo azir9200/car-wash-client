@@ -60,8 +60,9 @@ const SlotsList = ({ serviceId, userId }) => {
           vehicleModel,
           date: formattedDate,
         };
-
+        console.log("booking details", bookingDetails);
         const response = await createBooking(bookingDetails).unwrap();
+        console.log("respponse", response);
 
         if (response.success) {
           dispatch(
@@ -177,7 +178,6 @@ const SlotsList = ({ serviceId, userId }) => {
             >
               Book This Service
             </Link>
-           
           </div>
         )}
       </div>
