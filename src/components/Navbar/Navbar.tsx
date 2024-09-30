@@ -61,9 +61,15 @@ const Navbar = () => {
         </div>
 
         <div className="hidden md:flex items-center">
-          <button className="bg-white text-black p-2 rounded-r-md hover:bg-slate-700 text-base font-medium">
+          {/* <button className="bg-white text-black p-2 rounded-r-md hover:bg-slate-700 text-base font-medium">
+          
+          </button> */}
+          <Link
+            to="/services"
+            className="bg-white text-black p-2 rounded-r-md hover:bg-slate-700 text-base font-medium"
+          >
             Book Now
-          </button>
+          </Link>
         </div>
 
         {/* Cart and User Icons */}

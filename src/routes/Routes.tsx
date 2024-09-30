@@ -11,6 +11,8 @@ import ErrorPage from "@/components/ErrorPage/ErrorPage";
 import CheckOutPage from "@/pages/Payment/CheckOutPage";
 import ContactPage from "@/pages/Contact/Contact";
 import About from "@/pages/About/About";
+import PaymentFailed from "@/pages/PaymentFailed/PaymentFailed";
+import ConfirmationSuccess from "@/pages/ConfimationSuccess/ConfirmationSuccess";
 
 export const router = createBrowserRouter([
   {
@@ -58,6 +60,14 @@ export const router = createBrowserRouter([
       {
         path: "/register",
         element: <Register></Register>,
+      },
+      {
+        path: "payment/failed",
+        element: <PaymentFailed></PaymentFailed>,
+      },
+      {
+        path: "payment/success",
+        element: <ConfirmationSuccess />,
       },
     ],
   },

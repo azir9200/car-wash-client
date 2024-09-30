@@ -4,9 +4,9 @@ import {
   useCreteReviewMutation,
   useGetAllReviewQuery,
 } from "@/redux/Api/reviewApi";
-import { RootState } from "@/redux/store";
+import { selectCurrentUser } from "@/redux/features/userSlice";
+import { useAppSelector } from "@/redux/hooks";
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
@@ -16,10 +16,10 @@ const Reviews = () => {
   const [submitReview] = useCreteReviewMutation();
   const { data: reviews } = useGetAllReviewQuery(undefined);
   const allReviews = reviews?.data;
-  const user = useSelector((state: RootState) => state.user.user);
+  const user = useAppSelector(selectCurrentUser);
   const userName = user?.name;
   const navigate = useNavigate();
-  console.log(userName, "name")
+  console.log(user, "name");
 
   useEffect(() => {
     if (user?.token && window.location.hash === "#reviews") {
@@ -50,7 +50,7 @@ const Reviews = () => {
       <h2 className="text-2xl font-semibold mb-4">Leave a Review</h2>
 
       {/* Black Overlay for non-logged-in users */}
-      {!user?.token && (
+      {!user && (
         <div className="relative">
           <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
             <div className="text-center">
@@ -70,7 +70,7 @@ const Reviews = () => {
         </div>
       )}
 
-      {user?.token && (
+      {user && (
         <div className="mt-4">
           <textarea
             className="w-full p-2 border border-gray-700 rounded-md"

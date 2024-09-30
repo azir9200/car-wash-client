@@ -11,7 +11,8 @@ import {
 import { logout } from "../features/userSlice";
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: "http://localhost:5000/api",
+  baseUrl: "https://backend-deply-project.vercel.app/api",
+  // baseUrl: "http://localhost:5000/api",
 
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
