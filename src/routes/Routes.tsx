@@ -9,6 +9,8 @@ import BookingPage from "@/pages/Bookings/BookingPage";
 import AllReviews from "@/components/ShareHome/AllReviews";
 import ErrorPage from "@/components/ErrorPage/ErrorPage";
 import CheckOutPage from "@/pages/Payment/CheckOutPage";
+import ContactPage from "@/pages/Contact/Contact";
+import About from "@/pages/About/About";
 
 export const router = createBrowserRouter([
   {
@@ -40,6 +42,14 @@ export const router = createBrowserRouter([
       {
         path: "/order/create",
         element: <CheckOutPage />,
+      },
+      {
+        path: "/contact",
+        element: <ContactPage />,
+      },
+      {
+        path: "/about",
+        element: <About />,
       },
       {
         path: "/login",

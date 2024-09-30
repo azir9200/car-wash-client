@@ -23,16 +23,25 @@ const SlotsList = ({ serviceId }: { serviceId: string }) => {
   const [vehicleType, setVehicleType] = useState<string>(""); // Track vehicle data
   const [vehicleBrand, setVehicleBrand] = useState<string>("");
   const [vehicleModel, setVehicleModel] = useState<string>("");
-  const formattedDate = selectedDate?.toISOString().split("T")[0];
+
+  console.log("select", selectedDate);
+  const formattedDate = selectedDate
+    ? selectedDate.toISOString().split("T")[0]
+    : new Date().toISOString().split("T")[0];
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // const [slotTime, setSlotTime] = useState(null);
 
-  const { data: slotsResponse, isLoading, error } = useGetAvailableSlotQuery(serviceId, formattedDate as string);
+  const {
+    data: slotsResponse,
+    isLoading,
+    error,
+  } = useGetAvailableSlotQuery(serviceId);
+
   const [createBooking] = useCreateBookingMutation();
-
+  console.log(formattedDate, "date today");
   const availableSlots: Slot[] = slotsResponse?.data || [];
-  console.log(serviceId, " service id");
+
   useEffect(() => {
     setSelectedSlot(null);
   }, [selectedDate]);
