@@ -23,3 +23,5 @@ ABC
 *.njsproj
 *.sln
 *.sw?
+
+.vercel

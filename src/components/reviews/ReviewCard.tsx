@@ -1,4 +1,11 @@
-const Review = ({ review }) => {
+export type TReview = {
+  userName: string;
+  rating: number;
+  description: string;
+  date: string;
+};
+
+const Review = ({ review }: { review: TReview }) => {
   const { userName, rating, description, date } = review;
 
   // Render stars using Unicode characters

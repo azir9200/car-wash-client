@@ -131,7 +131,7 @@ const ServiceDetails = () => {
     return <div>Loading...</div>;
   }
   if (error) {
-    return <div>Error: {error.message}</div>;
+    return <div>Error: </div>;
   }
 
   return (
@@ -151,10 +151,8 @@ const ServiceDetails = () => {
           />
         </div>
       </div>
-      <h2 className="text-2xl  font-bold mb-4">
-        Available Time Slots
-      </h2>
-      <SlotsList availableSlots={availableSlots} serviceId={id} />
+      <h2 className="text-2xl  font-bold mb-4">Available Time Slots</h2>
+      <SlotsList serviceId={id || ""} />
     </div>
   );
 };

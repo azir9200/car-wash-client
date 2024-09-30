@@ -3,12 +3,19 @@ import { Link } from "react-router-dom";
 import { FaBars, FaTimes, FaUser } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { logout } from "@/redux/features/userSlice";
 
 const Navbar = () => {
+  const dispatch = useAppDispatch();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const bookings = useSelector(
     (state: RootState) => state.bookings.bookingArray
   );
+  const loggedUser = useAppSelector((store) => store.user.user);
+  const handleLogout = () => {
+    dispatch(logout());
+  };
 
   return (
     <nav className="bg-slate-500 p-6 fixed top-0 left-0 w-full z-50">
@@ -27,7 +34,7 @@ const Navbar = () => {
             Home
           </Link>
           <Link
-            to="/bookings"
+            to="bookings/:id"
             className="text-white text-base font-medium hover:text-black"
           >
             Bookings: <span className="font-bold">{bookings.length}</span>
@@ -61,11 +68,30 @@ const Navbar = () => {
 
         {/* Cart and User Icons */}
         <div className="hidden md:flex space-x-6 items-center">
-          {/* copy */}
+          {/* Authentication Buttons */}
+          {loggedUser ? (
+            <>
+              <button
+                onClick={handleLogout}
+                className="text-white text-base font-medium hover:text-black"
+              >
+                Logout
+              </button>
+            </>
+          ) : (
+            <Link
+              to="/login"
+              className="text-white text-base font-medium hover:text-black"
+            >
+              Login
+            </Link>
+          )}
 
-          <Link to="/login" className="text-white hover:text-black">
+          {/* // */}
+
+          <span className="text-white hover:text-black">
             <FaUser size={24} />
-          </Link>
+          </span>
         </div>
 
         {/* Mobile Menu Button */}

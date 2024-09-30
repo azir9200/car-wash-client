@@ -9,7 +9,15 @@ import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
-const SlotsList = ({ serviceId, userId }) => {
+// Define the Slot type if not defined elsewhere
+interface Slot {
+  _id: string;
+  startTime: string;
+  endTime: string;
+  booked: boolean;
+}
+
+const SlotsList = ({ serviceId }: { serviceId: string }) => {
   const [selectedSlot, setSelectedSlot] = useState<string | null>(null);
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
   const [vehicleType, setVehicleType] = useState<string>(""); // Track vehicle data
@@ -18,16 +26,12 @@ const SlotsList = ({ serviceId, userId }) => {
   const formattedDate = selectedDate?.toISOString().split("T")[0];
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [slotTime, setSlotTime] = useState(null);
+  // const [slotTime, setSlotTime] = useState(null);
 
-  const {
-    data: slotsResponse,
-    isLoading,
-    error,
-  } = useGetAvailableSlotQuery(serviceId, formattedDate);
+  const { data: slotsResponse, isLoading, error } = useGetAvailableSlotQuery(serviceId, formattedDate as string);
   const [createBooking] = useCreateBookingMutation();
 
-  const availableSlots = slotsResponse?.data || [];
+  const availableSlots: Slot[] = slotsResponse?.data || [];
   console.log(serviceId, " service id");
   useEffect(() => {
     setSelectedSlot(null);

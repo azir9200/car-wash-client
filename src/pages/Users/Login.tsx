@@ -3,7 +3,7 @@
 import { setEmail, setPassword } from "@/redux/features/loginSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { RootState } from "@/redux/store";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { setUser } from "@/redux/features/userSlice";
 import { useLoginMutation } from "@/redux/Api/authApi";
