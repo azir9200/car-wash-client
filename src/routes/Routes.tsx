@@ -8,7 +8,7 @@ import ServiceDetails from "@/pages/Services/serviceDetails";
 import BookingPage from "@/pages/Bookings/BookingPage";
 import AllReviews from "@/components/ShareHome/AllReviews";
 import ErrorPage from "@/components/ErrorPage/ErrorPage";
-import CheckOutPage from "@/pages/Payment/CheckOutPage";
+// import CheckOutPage from "@/pages/Payment/CheckOutPage";
 import ContactPage from "@/pages/Contact/Contact";
 import About from "@/pages/About/About";
 import PaymentFailed from "@/pages/PaymentFailed/PaymentFailed";
@@ -41,10 +41,10 @@ export const router = createBrowserRouter([
         path: "bookings/:id",
         element: <BookingPage />,
       },
-      {
-        path: "/order/create",
-        element: <CheckOutPage />,
-      },
+      // {
+      //   path: "/order/create",
+      //   element: <CheckOutPage />,
+      // },
       {
         path: "/contact",
         element: <ContactPage />,

@@ -1,4 +1,12 @@
+import { useNavigate } from "react-router-dom";
+
 const PaymentFailed = () => {
+  const navigate = useNavigate();
+
+  const handleRedirect = () => {
+    navigate("/");
+  };
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
       <div className="bg-white shadow-lg rounded-lg p-6 md:p-10 text-center">
@@ -20,8 +28,17 @@ const PaymentFailed = () => {
         <p className="text-gray-600 mb-6">
           Unfortunately, your payment could not be processed. Please try again.
         </p>
-        <button className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded shadow-md transition duration-300">
+        <button
+          onClick={handleRedirect}
+          className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded shadow-md transition duration-300 mb-4"
+        >
           Try Again
+        </button>
+        <button
+          onClick={() => navigate("/")}
+          className="bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded shadow-md transition duration-300"
+        >
+          Go to Home
         </button>
       </div>
     </div>
