@@ -15,7 +15,6 @@ import {
   REGISTER,
 } from "redux-persist";
 import { baseApi } from "./Api/baseApi";
-import slotReducer from "./features/slotSlice";
 
 const persistUserConfig = {
   key: "user",
@@ -29,7 +28,7 @@ export const store = configureStore({
     register: registerReducer,
     login: loginReducer,
     user: persistedUserReducer,
-    slots: slotReducer,
+
     bookings: bookingReducer,
   },
   middleware: (getDefaultMiddleware) =>
@@ -40,9 +39,7 @@ export const store = configureStore({
     }).concat(baseApi.middleware),
 });
 
-
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 export const persistor = persistStore(store);
-console.log("store", store);
 export type AppStore = typeof store;

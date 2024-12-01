@@ -106,13 +106,13 @@
 // export default ServiceDetails;
 
 import { useGetServiceDetailsQuery } from "@/redux/Api/serviceApi";
-import { useGetAvailableSlotQuery } from "@/redux/Api/SlotApi";
+import { useDispatch } from "react-redux";
+// import { useGetAvailableSlotQuery } from "@/redux/Api/SlotApi";
 import { useParams } from "react-router-dom";
-import SlotsList from "../Slot/SlotsLis";
 
 const ServiceDetails = () => {
   const { id } = useParams<{ id: string }>();
-
+  const dispatch = useDispatch();
   // Fetch service details
   const {
     data: serviceResponse,
@@ -120,12 +120,7 @@ const ServiceDetails = () => {
     isLoading,
   } = useGetServiceDetailsQuery(id || "");
 
-  // Fetch available slots using corrected path
-  const { data: slotsResponse } = useGetAvailableSlotQuery(`${id}`);
-
   const service = serviceResponse?.data;
-  const availableSlots = slotsResponse?.data || [];
-  console.log("data,azi", availableSlots);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -133,6 +128,12 @@ const ServiceDetails = () => {
   if (error) {
     return <div>Error: </div>;
   }
+
+  const handleBookService = (product: any) => {
+    console.log("object", product);
+    dispatch(addToCart(product));
+    toast.success(<div> You Product added to cart successfully! </div>);
+  };
 
   return (
     <div className=" mx-auto ">
@@ -147,12 +148,23 @@ const ServiceDetails = () => {
           <img
             src={service.image}
             alt={service.name}
-            className="lg:w- lg:h-80 object-cover rounded-md mb-4"
+            className="lg:w-full md:w-50% lg:h-80 md:52 sm:h-44 object-cover rounded-md mb-4"
           />
         </div>
       </div>
-      <h2 className="text-2xl  font-bold mb-4">Available Time Slots</h2>
-      <SlotsList serviceId={id || ""} />
+    
+      <button
+            onClick={(e) => {
+              e.stopPropagation();
+              onClick={handleBookService}
+            }}
+            className="bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-purple-800 transition duration-300 shadow-md hover:shadow-lg"
+          >
+            Add to Cart
+          </button>
+
+      {/* <h2 className="text-2xl  font-bold mb-4">Available Time Slots</h2>
+      <SlotsList serviceId={id || ""} /> */}
     </div>
   );
 };

@@ -13,6 +13,10 @@ import ContactPage from "@/pages/Contact/Contact";
 import About from "@/pages/About/About";
 import PaymentFailed from "@/pages/PaymentFailed/PaymentFailed";
 import ConfirmationSuccess from "@/pages/ConfimationSuccess/ConfirmationSuccess";
+import Dashboard from "@/Layout/Dashboard";
+import Review from "@/components/reviews/ReviewCard";
+import Reviews from "@/components/ShareHome/Reviews";
+import Footer from "@/components/Footer/Footer";
 
 export const router = createBrowserRouter([
   {
@@ -28,6 +32,7 @@ export const router = createBrowserRouter([
         path: "review",
         element: <AllReviews />,
       },
+
       {
         path: "/services",
         element: <Service />,
@@ -68,6 +73,16 @@ export const router = createBrowserRouter([
       {
         path: "payment/success",
         element: <ConfirmationSuccess />,
+      },
+    ],
+  },
+  {
+    path: "dashboard",
+    element: <Dashboard></Dashboard>,
+    children: [
+      {
+        path: "profile",
+        element: <Footer></Footer>,
       },
     ],
   },

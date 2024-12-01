@@ -24,7 +24,6 @@ const SlotsList = ({ serviceId }: { serviceId: string }) => {
   const [vehicleBrand, setVehicleBrand] = useState<string>("");
   const [vehicleModel, setVehicleModel] = useState<string>("");
 
-  console.log("select", selectedDate);
   const formattedDate = selectedDate
     ? selectedDate.toISOString().split("T")[0]
     : new Date().toISOString().split("T")[0];
@@ -39,7 +38,7 @@ const SlotsList = ({ serviceId }: { serviceId: string }) => {
   } = useGetAvailableSlotQuery(serviceId);
 
   const [createBooking] = useCreateBookingMutation();
-  console.log(formattedDate, "date today");
+
   const availableSlots: Slot[] = slotsResponse?.data || [];
 
   useEffect(() => {
@@ -73,14 +72,14 @@ const SlotsList = ({ serviceId }: { serviceId: string }) => {
           vehicleModel,
           date: formattedDate,
         };
-        console.log("booking details", bookingDetails);
+
         const response = await createBooking(bookingDetails).unwrap();
         console.log("respponse", response);
 
         if (response.success) {
           dispatch(
             addBooking({
-              _id: response.data._id, // Assuming _id is returned in response
+              _id: response.data._id, // _id is returned in response
               serviceId,
               slotId: selectedSlot,
               vehicle: {
@@ -103,7 +102,7 @@ const SlotsList = ({ serviceId }: { serviceId: string }) => {
         }
         navigate(`/bookings/${serviceId}`, {
           state: {
-            serviceName: response.data.serviceName, // Assuming this is available in the response
+            serviceName: response.data.serviceName, 
             selectedSlot,
           },
         });

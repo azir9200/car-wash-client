@@ -1,17 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface Vehicle {
-  vehicleType: string;
-  vehicleBrand: string;
-  vehicleModel: string;
-}
-
 interface Booking {
   _id: string;
   serviceId: any;
-  slotId: any;
-  vehicle: Vehicle;
+
   date: string;
 }
 

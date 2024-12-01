@@ -13,6 +13,7 @@ const Navbar = () => {
     (state: RootState) => state.bookings.bookingArray
   );
   const loggedUser = useAppSelector((store) => store.user.user);
+
   const handleLogout = () => {
     dispatch(logout());
   };
@@ -61,14 +62,11 @@ const Navbar = () => {
         </div>
 
         <div className="hidden md:flex items-center">
-          {/* <button className="bg-white text-black p-2 rounded-r-md hover:bg-slate-700 text-base font-medium">
-          
-          </button> */}
           <Link
-            to="/services"
+            to="/dashboard"
             className="bg-white text-black p-2 rounded-r-md hover:bg-slate-700 text-base font-medium"
           >
-            Book Now
+            Dashboard
           </Link>
         </div>
 
