@@ -2,7 +2,12 @@
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        primary: "#2453DF",
+        secondary: "#0C1F58",
+      },
+    },
   },
-  plugins: [require("daisyui")],
+  plugins: [require("@tailwindcss/forms")],
 };

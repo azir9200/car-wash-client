@@ -8,15 +8,14 @@ import ServiceDetails from "@/pages/Services/serviceDetails";
 import BookingPage from "@/pages/Bookings/BookingPage";
 import AllReviews from "@/components/ShareHome/AllReviews";
 import ErrorPage from "@/components/ErrorPage/ErrorPage";
-// import CheckOutPage from "@/pages/Payment/CheckOutPage";
 import ContactPage from "@/pages/Contact/Contact";
 import About from "@/pages/About/About";
 import PaymentFailed from "@/pages/PaymentFailed/PaymentFailed";
 import ConfirmationSuccess from "@/pages/ConfimationSuccess/ConfirmationSuccess";
 import Dashboard from "@/Layout/Dashboard";
-import Review from "@/components/reviews/ReviewCard";
-import Reviews from "@/components/ShareHome/Reviews";
-import Footer from "@/components/Footer/Footer";
+
+import Tasks from "@/DashboardItem/Tasks/Tasks";
+import UserInfo from "@/DashboardItem/UserInfo/UserInfo";
 
 export const router = createBrowserRouter([
   {
@@ -46,10 +45,7 @@ export const router = createBrowserRouter([
         path: "bookings/:id",
         element: <BookingPage />,
       },
-      // {
-      //   path: "/order/create",
-      //   element: <CheckOutPage />,
-      // },
+
       {
         path: "/contact",
         element: <ContactPage />,
@@ -81,8 +77,12 @@ export const router = createBrowserRouter([
     element: <Dashboard></Dashboard>,
     children: [
       {
-        path: "profile",
-        element: <Footer></Footer>,
+        path: "user",
+        element: <UserInfo></UserInfo>,
+      },
+      {
+        path: "tasks",
+        element: <Tasks></Tasks>,
       },
     ],
   },

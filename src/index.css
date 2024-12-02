@@ -20,3 +20,14 @@
 ::-webkit-scrollbar-track {
   background-color: #f1f1f1; /* Color of the scrollbar track */
 }
+.btn {
+  @apply rounded-xl h-10 px-4 grid place-content-center font-semibold  transition-all;
+}
+
+.btn-primary {
+  @apply bg-primary text-white;
+}
+
+.btn-danger {
+  @apply bg-red-500 text-white;
+}

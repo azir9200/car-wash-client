@@ -14,7 +14,7 @@ const Sidebar = () => {
       <div className="flex flex-col items-center gap-5 h-full py-5">
         {/* <img src={logo} alt="logo" /> */}
         <NavLink
-          to="/"
+          to="/dashboard/tasks"
           className={({ isActive }) =>
             isActive
               ? "p-2 rounded-2xl bg-primary text-white cursor-pointer"
@@ -68,7 +68,7 @@ const Sidebar = () => {
         </NavLink>
 
         <NavLink
-          to="/profile"
+          to="/dashboard/user"
           className={({ isActive }) =>
             isActive
               ? "p-2 rounded-2xl bg-primary text-white cursor-pointer mt-auto"

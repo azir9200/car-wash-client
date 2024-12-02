@@ -3,6 +3,7 @@ import storage from "redux-persist/lib/storage";
 import userReducer from "./features/userSlice";
 import bookingReducer from "./features/bookingSlice";
 import loginReducer from "./features/loginSlice";
+import tasksSliceReducer from "./features/tasksSlice.ts";
 import { configureStore } from "@reduxjs/toolkit";
 import {
   persistReducer,
@@ -28,8 +29,8 @@ export const store = configureStore({
     register: registerReducer,
     login: loginReducer,
     user: persistedUserReducer,
-
     bookings: bookingReducer,
+    tasksSlice: tasksSliceReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
