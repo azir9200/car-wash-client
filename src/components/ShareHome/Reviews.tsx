@@ -19,8 +19,7 @@ const Reviews = () => {
   const user = useAppSelector(selectCurrentUser);
   const userName = user?.name;
   const navigate = useNavigate();
-  console.log(user, "name");
-
+ 
   useEffect(() => {
     if (user?.token && window.location.hash === "#reviews") {
       document

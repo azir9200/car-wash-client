@@ -63,10 +63,10 @@ const AddTaskModel = ({ isOpen, setIsOpen }) => {
               id="assignedTo"
               {...register("assignedTo")}
             >
-              <option value="Araf">Araf</option>
+              <option value="Araf">FOYZUL</option>
               <option value="Anas">Anas</option>
-              <option value="Uddin">Uddin</option>
-              <option value="Azir">Azir</option>
+              <option value="Uddin">akash</option>
+              <option value="Azir">Tonmy</option>
               <option value="Mir">Mir</option>
               <option value="Mesba">Mesba</option>
             </select>

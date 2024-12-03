@@ -1,7 +1,15 @@
+import { useGetMeQuery } from "@/redux/Api/getMeApi";
+
 const About = () => {
+  const { data } = useGetMeQuery(undefined);
+  console.log("data", data);
+  const myself = data?.data;
+  console.log("myself", myself);
+
   return (
     <div className="container mx-auto bg-slate-200 p-8">
       <h1 className="text-4xl font-bold text-center mb-8">About Us</h1>
+
       <p className="text-lg text-center mb-6">
         Welcome to our Car Wash Booking System! We are dedicated to providing
         you with a seamless car wash experience that is convenient, efficient,

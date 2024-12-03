@@ -8,11 +8,12 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 const MyTasks = () => {
-  const { email } = useSelector((state) => state.tasksSlice);
+  const { tasks, userSpecficTasks } = useSelector((state) => state.tasksSlice);
+  console.log("specfic", userSpecficTasks);
   const { data } = useGetMeQuery(undefined);
-  console.log("data", data);
-  const myself = data?.data;
-  console.log("myself", myself);
+  const name = data?.data?.name;
+  console.log("login name", name);
+
   const [isOpen, setIsOpen] = useState(false);
   const [taskId, setTaskId] = useState(0);
 
@@ -23,14 +24,14 @@ const MyTasks = () => {
   };
 
   useEffect(() => {
-    dispatch(userTasks(email));
-  }, [email, dispatch]);
+    dispatch(userTasks(name));
+  }, [name, dispatch, tasks]);
 
   return (
     <div>
       <h1 className="text-xl my-3">My Tasks</h1>
       <div className=" h-[750px] overflow-auto space-y-3">
-        {tasks?.map((item) => (
+        {userSpecficTasks?.map((item) => (
           <div
             key={item.id}
             className="bg-secondary/10 rounded-md p-3 flex justify-between"
