@@ -38,7 +38,7 @@ export default function Modal({ isOpen, setIsOpen, title, children }) {
                     as="h3"
                     className="text-lg font-medium leading-6 text-gray-900"
                   >
-                    {title} <p>"title is here "</p>
+                    {title}
                   </Dialog.Title>
                   {children}
                 </Dialog.Panel>

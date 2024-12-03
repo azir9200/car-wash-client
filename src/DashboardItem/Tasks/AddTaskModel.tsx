@@ -1,15 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useForm } from "react-hook-form";
 import Modal from "../ui/Modal";
+import { useDispatch } from "react-redux";
+import { addTask } from "@/redux/features/tasksSlice";
 // import Modal from "../ui/Modal";
 
 const AddTaskModel = ({ isOpen, setIsOpen }) => {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, reset } = useForm();
+  const dispatch = useDispatch();
 
   const onSubmit = (data: any) => {
-    console.log("azir data", data);
+    dispatch(addTask(data));
+    onCancel();
   };
   const onCancel = () => {
+    reset();
     setIsOpen(false);
   };
   return (

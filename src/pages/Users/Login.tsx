@@ -13,10 +13,7 @@ const Login = () => {
   const dispatch = useAppDispatch();
   const { email, password } = useAppSelector((state: RootState) => state.login);
   const [login] = useLoginMutation();
-
   const navigate = useNavigate();
-  // const location = useLocation;
-  // const from = location.state?.from?.pathname || "/";
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,7 +23,7 @@ const Login = () => {
 
       const user = verifyToken(result.data.accessToken);
       dispatch(setUser({ user: user, token: result.data.accessToken }));
-
+      console.log("login", user);
       if (result.success && result.data?.accessToken) {
         Swal.fire({
           position: "top-end",

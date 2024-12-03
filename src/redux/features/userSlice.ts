@@ -1,27 +1,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
-// Define the User interface
-export interface User {
-  _id: string;
-  name: string;
-  email: string;
-  role: string;
-  // Add the token property
-  token?: string;
-}
-
-// Define the UserState interface
-export interface UserState {
-  user: User | null;
+interface UserState {
+  user: any | null;
   token: string | null;
 }
 
 const initialState: UserState = {
-  token: null,
-  user: null,
+  token: "",
+  user: {
+    name: "",
+    email: "",
+    role: "",
+  },
 };
-
 const userSlice = createSlice({
   name: "user",
   initialState,
