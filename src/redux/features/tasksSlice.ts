@@ -40,17 +40,23 @@ const tasksSlice = createSlice({
       target.status = payload.status;
     },
 
-    userTasks: (state, { payload }) => {
+    setUserTasks: (state, { payload }) => {
       state.userSpecificTasks = state.tasks.filter(
         (item) =>
-          item.assignedTo === payload &&
-          (item.status === "pending" || item.status === "running")
+          item.assignedTo === payload          
       );
+    // setUserTasks: (state, { payload }) => {
+    //   state.userSpecificTasks = state.tasks.filter(
+    //     (item) =>
+    //       item.assignedTo === payload &&
+    //       (item.status === "pending" || item.status === "running")
+    //   );
+      
     },
   },
 });
 
-export const { addTask, updateStatus, removeTask, userTasks } =
+export const { addTask, updateStatus, removeTask, setUserTasks } =
   tasksSlice.actions;
 
 export default tasksSlice.reducer;

@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
-interface UserState {
+//
+export interface UserState {
   user: any | null;
   token: string | null;
 }
