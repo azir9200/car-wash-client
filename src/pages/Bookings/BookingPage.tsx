@@ -1,7 +1,7 @@
-import { useGetUserQuery } from "@/redux/Api/authApi";
 import { useGetMyBookingsQuery } from "@/redux/Api/bookingApi";
+import { useGetMeQuery } from "@/redux/Api/getMeApi";
 import { useGetServiceDetailsQuery } from "@/redux/Api/serviceApi";
-import { useGetAvailableSlotQuery } from "@/redux/Api/SlotApi";
+
 import { useParams } from "react-router-dom";
 
 const BookingPage = () => {
@@ -20,7 +20,7 @@ const BookingPage = () => {
   console.log(" new slot", slot);
 
   // get USER info
-  const { data: userResponse } = useGetUserQuery(undefined);
+  const { data: userResponse } = useGetMeQuery(undefined);
   const user = userResponse?.data;
   console.log(" user to hajj", user);
   // loader

@@ -35,13 +35,14 @@ const Sidebar = () => {
         </NavLink>
 
         <NavLink
-          to="/latest"
+          to="dashboard/latest"
           className={({ isActive }) =>
             isActive
               ? "p-2 rounded-2xl bg-primary text-white cursor-pointer"
               : "p-2 rounded-2xl group hover:bg-primary text-secondary/40 cursor-pointer transition-all"
           }
         >
+          Add Post
           <BookOpenIcon className="h-7 w-7 group-hover:text-white " />
         </NavLink>
 

@@ -1,153 +1,130 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useGetMeQuery } from "@/redux/Api/getMeApi";
+import React, { useState } from "react";
+import { FaStar } from "react-icons/fa";
+import { Link, useNavigate } from "react-router-dom";
 
-import {
-  useCreteReviewMutation,
-  useGetAllReviewQuery,
-} from "@/redux/Api/reviewApi";
-import { selectCurrentUser } from "@/redux/features/userSlice";
-import { useAppSelector } from "@/redux/hooks";
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
-
-const Reviews = () => {
-  const [rating, setRating] = useState(0);
-  const [feedback, setFeedback] = useState("");
-  const [submitReview] = useCreteReviewMutation();
-  const { data: reviews } = useGetAllReviewQuery(undefined);
-  const allReviews = reviews?.data;
-  const user = useAppSelector(selectCurrentUser);
-  const userName = user?.name;
+const Reviews: React.FC = () => {
   const navigate = useNavigate();
- 
-  useEffect(() => {
-    if (user?.token && window.location.hash === "#reviews") {
-      document
-        .getElementById("reviewSection")
-        ?.scrollIntoView({ behavior: "smooth" });
-    }
-  }, [user]);
 
-  const handleReviewSubmit = async () => {
-    if (!user?.token) {
-      Swal.fire("Please log in to submit a review.", "", "warning");
-      return;
-    }
+  const { data } = useGetMeQuery(undefined);
+  const myself = data?.data;
 
-    try {
-      await submitReview({ rating, feedback, userId: user._id }).unwrap();
-      setFeedback("");
+  const [rating, setRating] = useState<number>(0);
+  const [hover, setHover] = useState<number>(0);
+  const [feedback, setFeedback] = useState<string>("");
+  const [reviews, setReviews] = useState<
+    { rating: number; feedback: string }[]
+  >([
+    { rating: 5, feedback: "Great service! Highly recommended." },
+    { rating: 4, feedback: "Fast and reliable car wash!" },
+  ]);
+
+  // Handle form submission
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (rating && feedback) {
+      setReviews([{ rating, feedback }, ...reviews].slice(0, 2)); // Keep last two reviews
       setRating(0);
-      Swal.fire("Review submitted successfully!", "", "success");
-    } catch (error) {
-      Swal.fire("Error submitting review.", "", "error");
+      setFeedback("");
     }
   };
 
+  // Calculate overall rating
+  const overallRating =
+    reviews.reduce((sum, review) => sum + review.rating, 0) / reviews.length ||
+    0;
+
+  // Redirect to login if not authenticated
+  const handleLoginRedirect = () => {
+    navigate("/login", { state: { from: "/#reviews" } });
+  };
+
   return (
-    <div className="bg-gray-100 p-8" id="reviewSection">
-      <h2 className="text-2xl font-semibold mb-4">Leave a Review</h2>
-
-      {/* Black Overlay for non-logged-in users */}
-      {!user && (
-        <div className="relative">
-          <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-            <div className="text-center">
-              <p className="text-neutral-300 m-4">
-                You must log in to leave a review
-              </p>
-              <button
-                className="text-blue-500 hover:text-blue-700"
-                onClick={() =>
-                  navigate("/login", { state: { from: "/#reviews" } })
-                }
-              >
-                Log in
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {user && (
-        <div className="mt-4">
-          <textarea
-            className="w-full p-2 border border-gray-700 rounded-md"
-            placeholder="Write your feedback here..."
-            value={feedback}
-            onChange={(e) => setFeedback(e.target.value)}
-          />
-          <div className="mt-4">
-            <label className="text-lg">Rating: </label>
-            <div className="inline-block ml-2">
-              {[1, 2, 3, 4, 5].map((star) => (
-                <span
-                  key={star}
-                  className={`cursor-pointer text-2xl ${
-                    star <= rating ? "text-yellow-400" : "text-gray-400"
-                  }`}
-                  onClick={() => setRating(star)}
-                >
-                  ★
-                </span>
-              ))}
-            </div>
-          </div>
+    <section className="relative bg-gray-50 py-16 px-8" id="reviews">
+      {!myself && (
+        <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
           <button
-            className="mt-4 bg-blue-500 text-white py-2 px-4 rounded-md"
-            onClick={handleReviewSubmit}
+            onClick={handleLoginRedirect}
+            className="bg-white text-black px-6 py-3 rounded-lg shadow-lg hover:bg-gray-200 transition"
           >
-            Submit Review
+            Login to Leave a Review
           </button>
         </div>
       )}
 
-      {/* Latest Reviews */}
-      <div className="mt-14">
-        <h3 className="text-xl font-semibold">Latest Reviews</h3>
-        {allReviews?.length ? (
-          allReviews.slice(0, 2).map((review: any) => (
-            <div
-              key={review._id}
-              className="mt-4 p-4 bg-white rounded-md shadow-sm"
-            >
-              <div>
-                <p className="text-lg font-bold">{userName}</p>
-                <p className="text-sm text-gray-600">{review.comment}</p>
-                <p className="text-yellow-400">
-                  {"★".repeat(review.rating)}{" "}
-                  <span className="text-gray-500">({review.rating}/5)</span>
-                </p>
-              </div>
-            </div>
-          ))
-        ) : (
-          <p>No reviews yet.</p>
-        )}
-        <button
-          className="mt-4 text-blue-500 hover:text-blue-700"
-          onClick={() => navigate("/review")}
-        >
-          See All Reviews
-        </button>
-      </div>
+      <div className="container mx-auto max-w-4xl">
+        <h2 className="text-4xl font-bold text-gray-800 text-center mb-8">
+          Share Your Feedback
+        </h2>
 
-      {/* Overall Rating */}
-      <div className="mt-8">
-        <p className="text-lg font-semibold">Overall Rating: </p>
-        <p className="text-2xl text-yellow-400">
-          {allReviews?.length
-            ? (
-                allReviews.reduce(
-                  (acc: any, review: { rating: number }) => acc + review.rating,
-                  0
-                ) / allReviews.length
-              ).toFixed(1)
-            : "No ratings yet"}
-          /5
-        </p>
+        {myself && (
+          <form
+            onSubmit={handleSubmit}
+            className="bg-white p-8 shadow-lg rounded-lg"
+          >
+            <textarea
+              value={feedback}
+              onChange={(e) => setFeedback(e.target.value)}
+              placeholder="Write your feedback here..."
+              className="w-full p-4 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              rows={4}
+              required
+            />
+
+            {/* Star Rating */}
+            <div className="flex items-center justify-center mb-4">
+              {[1, 2, 3, 4, 5].map((star) => (
+                <FaStar
+                  key={star}
+                  className={`text-4xl cursor-pointer ${
+                    (hover || rating) >= star
+                      ? "text-yellow-500"
+                      : "text-gray-300"
+                  } transition-colors duration-200`}
+                  onClick={() => setRating(star)}
+                  onMouseEnter={() => setHover(star)}
+                  onMouseLeave={() => setHover(0)}
+                />
+              ))}
+            </div>
+
+            <button
+              type="submit"
+              className="w-full bg-indigo-500 text-white py-3 rounded-lg hover:bg-indigo-600 transition-colors"
+            >
+              Submit Review
+            </button>
+          </form>
+        )}
+
+        {/* Post-Submission Display */}
+        <div className="mt-12">
+          <h3 className="text-2xl font-semibold text-gray-800 mb-4">
+            Overall Rating: {overallRating.toFixed(1)} / 5 ⭐
+          </h3>
+
+          {reviews.map((review, index) => (
+            <div
+              key={index}
+              className="bg-white p-6 mb-4 shadow-md rounded-lg border-l-4 border-indigo-500"
+            >
+              <div className="flex items-center mb-2">
+                {Array.from({ length: review.rating }).map((_, i) => (
+                  <FaStar key={i} className="text-yellow-500 text-xl" />
+                ))}
+              </div>
+              <p className="text-gray-700">{review.feedback}</p>
+            </div>
+          ))}
+
+          <Link to="/allReviews">
+            <button className="mt-6 bg-gray-800 text-white py-2 px-4 rounded-lg hover:bg-gray-700 transition">
+              See All Reviews
+            </button>
+          </Link>
+        </div>
       </div>
-    </div>
+    </section>
   );
 };
 

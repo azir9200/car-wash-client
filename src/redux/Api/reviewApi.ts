@@ -6,7 +6,7 @@ const serviceApi = baseApi.injectEndpoints({
       query: (data) => {
         return {
           method: "POST",
-          url: `/review/create`,
+          url: `/reviews/create`,
           body: data,
         };
       },
@@ -14,22 +14,21 @@ const serviceApi = baseApi.injectEndpoints({
     //get service api
     getAllReview: builder.query({
       query: () => ({
-        url: "/review",
+        url: "/api/reviews",
         method: "GET",
       }),
     }),
-       // Fetch a single product by ID
-       getReviewDetails: builder.query({
-        query: (id: string) => ({
-          url: `/review/${id}`,
-          method: "GET",
-        }),
+    // Fetch a single product by ID
+    getReviewDetails: builder.query({
+      query: (id: string) => ({
+        url: `/reviews/${id}`,
+        method: "GET",
       }),
+    }),
   }),
 });
 export const {
-     useCreteReviewMutation,
-     useGetAllReviewQuery,
-     useGetReviewDetailsQuery,
-
- } = serviceApi;
+  useCreteReviewMutation,
+  useGetAllReviewQuery,
+  useGetReviewDetailsQuery,
+} = serviceApi;

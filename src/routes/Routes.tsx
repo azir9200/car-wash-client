@@ -16,6 +16,7 @@ import Dashboard from "@/Layout/Dashboard";
 
 import Tasks from "@/DashboardItem/Tasks/Tasks";
 import UserInfo from "@/DashboardItem/UserInfo/UserInfo";
+import ProtectedRoute from "@/Layout/PrivateRoute";
 
 export const router = createBrowserRouter([
   {
@@ -28,13 +29,17 @@ export const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "review",
+        path: "allReviews",
         element: <AllReviews />,
       },
 
       {
         path: "/services",
-        element: <Service />,
+        element: (
+          <ProtectedRoute>
+            <Service />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/services/:id",
@@ -74,12 +79,17 @@ export const router = createBrowserRouter([
   },
   {
     path: "dashboard",
-    element: <Dashboard></Dashboard>,
+    element: (
+      <ProtectedRoute>
+        <Dashboard></Dashboard>
+      </ProtectedRoute>
+    ),
     children: [
       {
         path: "user",
         element: <UserInfo></UserInfo>,
       },
+
       {
         path: "tasks",
         element: <Tasks></Tasks>,

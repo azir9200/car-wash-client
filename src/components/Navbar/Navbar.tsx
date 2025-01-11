@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { FaBars, FaTimes, FaUser } from "react-icons/fa";
+import { FaBars, FaTimes } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { logout } from "@/redux/features/userSlice";
+import { useGetMeQuery } from "../../redux/Api/getMeApi";
 
 const Navbar = () => {
   const dispatch = useAppDispatch();
@@ -13,7 +14,10 @@ const Navbar = () => {
     (state: RootState) => state.bookings.bookingArray
   );
   const loggedUser = useAppSelector((store) => store.user.user);
+  const { data } = useGetMeQuery(undefined);
 
+  const myself = data?.data;
+  
   const handleLogout = () => {
     dispatch(logout());
   };
@@ -79,7 +83,7 @@ const Navbar = () => {
                 onClick={handleLogout}
                 className="text-white text-base font-medium hover:text-black"
               >
-                Logout
+                {myself?.name} Logout
               </button>
             </>
           ) : (
@@ -93,9 +97,10 @@ const Navbar = () => {
 
           {/* // */}
 
-          <span className="text-white hover:text-black">
+          {/* <span className="text-white hover:text-black">
             <FaUser size={24} />
-          </span>
+          </span> */}
+          {/* <p> {myself} </p> */}
         </div>
 
         {/* Mobile Menu Button */}

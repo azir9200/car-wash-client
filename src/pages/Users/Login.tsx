@@ -22,6 +22,7 @@ const Login = () => {
       console.log("user login", result);
 
       const user = verifyToken(result.data.accessToken);
+     
       dispatch(setUser({ user: user, token: result.data.accessToken }));
       console.log("login", user);
       if (result.success && result.data?.accessToken) {
@@ -85,7 +86,7 @@ const Login = () => {
           </form>
           <p className="text-sm text-center text-gray-600 mt-4">
             New here?{" "}
-            <Link to="/register" className="text-blue-500 hover:underline">
+            <Link to="/register" className="text-red-800 hover:underline">
               register first
             </Link>
           </p>

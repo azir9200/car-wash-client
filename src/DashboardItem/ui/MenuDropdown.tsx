@@ -1,15 +1,12 @@
 import { Menu, Transition } from "@headlessui/react";
-import { signOut } from "firebase/auth";
 import { Fragment } from "react";
-import auth from "../../utils/firebase.config";
 import { useDispatch } from "react-redux";
-import { logout } from "../../redux/features/user/userSlice";
+import { logout } from "@/redux/features/userSlice";
 
 export default function MenuDropdown({ children }) {
   const dispatch = useDispatch();
 
   const handleLogout = () => {
-    signOut(auth);
     dispatch(logout());
   };
 

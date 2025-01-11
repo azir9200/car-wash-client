@@ -5,16 +5,16 @@ import {
   setName,
   setPassword,
   setPhone,
-  setRole,
 } from "@/redux/features/registerSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { RootState } from "@/redux/store";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const Register: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { name, email, password, phone, address, role } = useAppSelector(
-    (state) => state.register
+  const { name, email, password, phone, address } = useAppSelector(
+    (state: RootState) => state.register
   );
 
   const [signUp] = useSignUpMutation();
@@ -22,9 +22,9 @@ const Register: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const user = await signUp({ name, email, role, phone, address, password });
-    console.log("user=>", user);
-    if (user) {
+    try {
+      const register = await signUp({ name, email, phone, address, password });
+      console.log("user Register", register);
       Swal.fire({
         position: "top-end",
         icon: "success",
@@ -33,7 +33,8 @@ const Register: React.FC = () => {
         timer: 1500,
       });
       navigate("/login");
-    } else if (!user) {
+    } catch (error) {
+      console.error("Login Error:", error);
       Swal.fire({
         position: "top-end",
         icon: "error",
@@ -96,20 +97,11 @@ const Register: React.FC = () => {
                   onChange={(e) => dispatch(setAddress(e.target.value))}
                 />
               </div>
-              <div>
-                <input
-                  type="text"
-                  id="role"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 mx-4 "
-                  placeholder="Role"
-                  value={role}
-                  onChange={(e) => dispatch(setRole(e.target.value))}
-                />
-              </div>
+
               <div>
                 <button
                   type="submit"
-                  className="w-full py-2 my-2 bg-gray-600 text-white font-semibold rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500  mx-4 my-2"
+                  className="w-full py-2 bg-gray-600 text-white font-semibold rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500  mx-4 my-2"
                 >
                   Register
                 </button>
