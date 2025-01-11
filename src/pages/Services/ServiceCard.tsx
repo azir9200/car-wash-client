@@ -2,7 +2,6 @@
 import { Link } from "react-router-dom";
 
 const ServiceCard = (service: any) => {
-  
   return (
     <div>
       <div className="bg-white shadow-md rounded-md p-6">
@@ -21,7 +20,7 @@ const ServiceCard = (service: any) => {
               Duration: {service.service.duration}
             </p>
           </div>
-          <div className="w-1/4 justify-end">
+          <div className="w-4/5 justify-end">
             <img
               src={service.service.image}
               className="w-full h-full rounded-tl-3xl text-end "

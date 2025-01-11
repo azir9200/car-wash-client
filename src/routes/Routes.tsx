@@ -13,8 +13,6 @@ import About from "@/pages/About/About";
 import PaymentFailed from "@/pages/PaymentFailed/PaymentFailed";
 import ConfirmationSuccess from "@/pages/ConfimationSuccess/ConfirmationSuccess";
 import Dashboard from "@/Layout/Dashboard";
-
-import Tasks from "@/DashboardItem/Tasks/Tasks";
 import UserInfo from "@/DashboardItem/UserInfo/UserInfo";
 import ProtectedRoute from "@/Layout/PrivateRoute";
 
@@ -88,11 +86,6 @@ export const router = createBrowserRouter([
       {
         path: "user",
         element: <UserInfo></UserInfo>,
-      },
-
-      {
-        path: "tasks",
-        element: <Tasks></Tasks>,
       },
     ],
   },

@@ -1,24 +1,30 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, } from "@reduxjs/toolkit";
 
-interface Booking {
-  _id: string;
-  serviceId: any;
+// interface Booking {
+//   _id: string;
+//   serviceId: any;
 
-  date: string;
-}
+//   date: string;
+// }
 
 const initialState = {
-  bookingArray: [] as any,
+  bookings: [] as any,
 };
 
 const bookingSlice = createSlice({
   name: "booking",
   initialState,
   reducers: {
-    addBooking: (state, action: PayloadAction<Booking>) => {
-      state.bookingArray.push(action.payload); // Add a new booking
+    addBooking: (state, action) => {
+      const isExist = state.bookings.find(
+        (booking: { _id: any }) => booking._id === action.payload._id
+      );
+      if (!isExist) {
+        state.bookings.push({ ...action.payload, quantity: 1 });
+      }
     },
+    //update booking number
   },
 });
 

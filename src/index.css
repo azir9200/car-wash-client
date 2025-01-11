@@ -14,7 +14,7 @@
     #ff0000,
     #008000
   ); /* Color of the scrollbar thumb */
-  border-radius: 10px;
+  border-radius: 16px; padding: 20;
 }
 
 ::-webkit-scrollbar-track {

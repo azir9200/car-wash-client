@@ -1,119 +1,13 @@
-// import { useState, useEffect } from "react";
-// import { Link, useParams } from "react-router-dom";
-// import { useGetServiceDetailsQuery } from "@/redux/Api/serviceApi";
-// import { useGetAvailableSlotQuery } from "@/redux/Api/SlotApi";
-
-// const ServiceDetails = () => {
-//   const { id } = useParams<{ id: string }>();
-
-//   // Fetching service details and available slots
-//   const {
-//     data: serviceResponse,
-//     error,
-//     isLoading,
-//   } = useGetServiceDetailsQuery(id || "");
-//   const { data: slotsResponse } = useGetAvailableSlotQuery(
-//     `/api/slots/available/${id}`
-//   );
-
-//   // Extract service data
-//   const service = serviceResponse?.data;
-//   const availableSlots = slotsResponse?.data || [];
-
-//   // Slot selection state
-//   const [selectedSlot, setSelectedSlot] = useState<string | null>(null);
-
-//   // Reset slot selection when service changes
-//   useEffect(() => {
-//     setSelectedSlot(null);
-//   }, [service]);
-
-//   // Loading and error handling
-//   if (isLoading) {
-//     return <div>Loading...</div>;
-//   }
-
-//   if (error) {
-//     return <div>Error: {error.message}</div>;
-//   }
-
-//   // Handle slot selection
-//   const handleSlotSelection = (slot: string) => {
-//     setSelectedSlot(slot);
-//   };
-
-//   return (
-//     <div className="container mx-auto p-6">
-//       <div className="lg:flex justify-between">
-//         {/* Service details section */}
-//         <div className="w-2/5">
-//           <h1 className="text-4xl font-bold mb-6">{service.name}</h1>
-//           <p>{service.description}</p>
-//           <p className="font-semibold">Duration: azir {service.duration}</p>
-//           <p className="text-gray-600 mb-6">Price: ${service.price}</p>
-//         </div>
-
-//         {/* Service image */}
-//         <div>
-//           <img
-//             src={service.image}
-//             alt={service.name}
-//             className="lg:w-full lg:h-80 object-cover rounded-md mb-4"
-//           />
-//         </div>
-//       </div>
-
-//       {/* Available time slots */}
-//       <h2 className="text-2xl font-bold mb-4">Available Time Slots</h2>
-//       <div className="grid grid-cols-3 gap-4 mb-4">
-//         {availableSlots.map(
-//           (
-//             slot: { _id: string; time: string; booked: boolean },
-//             idx: number
-//           ) => (
-//             <button
-//               key={idx}
-//               className={`py-2 px-4 rounded-lg ${
-//                 slot.booked ? "bg-gray-300 cursor-not-allowed" : "bg-green-500"
-//               } ${
-//                 selectedSlot === slot.time ? "border-2 border-blue-600" : ""
-//               }`}
-//               onClick={() => handleSlotSelection(slot.time)}
-//               disabled={slot.booked}
-//             >
-//               {slot.time}
-//             </button>
-//           )
-//         )}
-//       </div>
-
-//       {/* Display selected slot and booking link */}
-//       {selectedSlot && (
-//         <div className="mt-6">
-//           <h3 className="text-lg">Selected Slot: {selectedSlot}</h3>
-//           <Link
-//             to={`/booking/${id}?slot=${selectedSlot}`}
-//             className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
-//           >
-//             Book This Service
-//           </Link>
-//         </div>
-//       )}
-//     </div>
-//   );
-// };
-
-// export default ServiceDetails;
-
 import { useGetServiceDetailsQuery } from "@/redux/Api/serviceApi";
-import { useDispatch } from "react-redux";
-// import { useGetAvailableSlotQuery } from "@/redux/Api/SlotApi";
+import { addBooking } from "@/redux/features/bookingSlice";
+import { useAppDispatch } from "@/redux/hooks";
 import { useParams } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const ServiceDetails = () => {
   const { id } = useParams<{ id: string }>();
-  const dispatch = useDispatch();
-  // Fetch service details
+  const dispatch = useAppDispatch();
+
   const {
     data: serviceResponse,
     error,
@@ -128,11 +22,25 @@ const ServiceDetails = () => {
   if (error) {
     return <div>Error: </div>;
   }
+  Swal.fire({
+    position: "top-end",
+    icon: "success",
+    title: "Registration successful!",
+    showConfirmButton: false,
+    timer: 1500,
+  });
 
-  const handleBookService = (product: any) => {
-    console.log("object", product);
-    dispatch(addToCart(product));
-    toast.success(<div> You Product added to cart successfully! </div>);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleBookService = (service: any) => {
+    dispatch(addBooking(service));
+    // Show success message
+    Swal.fire({
+      position: "top-end",
+      icon: "success",
+      title: "Service added to your booking successfully!",
+      showConfirmButton: false,
+      timer: 1500,
+    });
   };
 
   return (
@@ -152,19 +60,15 @@ const ServiceDetails = () => {
           />
         </div>
       </div>
-    
-      <button
-            onClick={(e) => {
-              e.stopPropagation();
-              onClick={handleBookService}
-            }}
-            className="bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-purple-800 transition duration-300 shadow-md hover:shadow-lg"
-          >
-            Add to Cart
-          </button>
 
-      {/* <h2 className="text-2xl  font-bold mb-4">Available Time Slots</h2>
-      <SlotsList serviceId={id || ""} /> */}
+      <button
+        onClick={() => {
+          handleBookService(service);
+        }}
+        className="bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-purple-800 transition duration-300 shadow-md hover:shadow-lg"
+      >
+        Book this Service
+      </button>
     </div>
   );
 };

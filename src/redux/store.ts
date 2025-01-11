@@ -50,7 +50,6 @@ import storage from "redux-persist/lib/storage";
 import userReducer from "./features/userSlice";
 import bookingReducer from "./features/bookingSlice";
 import loginReducer from "./features/loginSlice";
-import tasksSliceReducer from "./features/tasksSlice.ts";
 import { configureStore } from "@reduxjs/toolkit";
 import { persistReducer, persistStore } from "redux-persist";
 import { baseApi } from "./Api/baseApi";
@@ -68,7 +67,6 @@ export const store = configureStore({
     login: loginReducer,
     user: persistedUserReducer,
     bookings: bookingReducer,
-    tasksSlice: tasksSliceReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({ serializableCheck: false }).concat(

@@ -1,68 +1,90 @@
-import { Menu, Transition } from "@headlessui/react";
-import { Fragment } from "react";
-import { useDispatch } from "react-redux";
-import { logout } from "@/redux/features/userSlice";
+import React from "react";
+import { DownOutlined, UserOutlined } from "@ant-design/icons";
+import type { MenuProps } from "antd";
+import { Button, Dropdown, message, Space, Tooltip } from "antd";
 
-export default function MenuDropdown({ children }) {
-  const dispatch = useDispatch();
+const handleButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+  message.info("Click on left button.");
+  console.log("click left button", e);
+};
 
-  const handleLogout = () => {
-    dispatch(logout());
-  };
+const handleMenuClick: MenuProps["onClick"] = (e) => {
+  message.info("Click on menu item.");
+  console.log("click", e);
+};
 
-  return (
-    <Menu as="div" className="relative inline-block text-left bg-white z-[999]">
-      <div>
-        <Menu.Button>{children}</Menu.Button>
-      </div>
-      <Transition
-        as={Fragment}
-        enter="transition ease-out duration-100"
-        enterFrom="transform opacity-0 scale-95"
-        enterTo="transform opacity-100 scale-100"
-        leave="transition ease-in duration-75"
-        leaveFrom="transform opacity-100 scale-100"
-        leaveTo="transform opacity-0 scale-95"
-      >
-        <Menu.Items className="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-          <div className="px-1 py-1">
-            <Menu.Item>
-              {({ active }) => (
-                <button
-                  className={`${
-                    active ? "bg-primary text-white" : "text-gray-900"
-                  } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                >
-                  Profile
-                </button>
-              )}
-            </Menu.Item>
-            <Menu.Item>
-              {({ active }) => (
-                <button
-                  className={`${
-                    active ? "bg-primary text-white" : "text-gray-900"
-                  } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                >
-                  Settings
-                </button>
-              )}
-            </Menu.Item>
-            <Menu.Item>
-              {({ active }) => (
-                <button
-                  onClick={handleLogout}
-                  className={`${
-                    active ? "bg-primary text-white" : "text-gray-900"
-                  } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                >
-                  Logout
-                </button>
-              )}
-            </Menu.Item>
-          </div>
-        </Menu.Items>
-      </Transition>
-    </Menu>
-  );
-}
+const items: MenuProps["items"] = [
+  {
+    label: "1st menu item",
+    key: "1",
+    icon: <UserOutlined />,
+  },
+  {
+    label: "2nd menu item",
+    key: "2",
+    icon: <UserOutlined />,
+  },
+  {
+    label: "3rd menu item",
+    key: "3",
+    icon: <UserOutlined />,
+    danger: true,
+  },
+  {
+    label: "4rd menu item",
+    key: "4",
+    icon: <UserOutlined />,
+    danger: true,
+    disabled: true,
+  },
+];
+
+const menuProps = {
+  items,
+  onClick: handleMenuClick,
+};
+
+const App: React.FC = () => (
+  <Space wrap>
+    <Dropdown.Button menu={menuProps} onClick={handleButtonClick}>
+      Dropdown
+    </Dropdown.Button>
+    <Dropdown.Button
+      menu={menuProps}
+      placement="bottom"
+      icon={<UserOutlined />}
+    >
+      Dropdown
+    </Dropdown.Button>
+    <Dropdown.Button menu={menuProps} onClick={handleButtonClick} disabled>
+      Dropdown
+    </Dropdown.Button>
+    <Dropdown.Button
+      menu={menuProps}
+      buttonsRender={([leftButton, rightButton]) => [
+        <Tooltip title="tooltip" key="leftButton">
+          {leftButton}
+        </Tooltip>,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        React.cloneElement(rightButton as React.ReactElement<any, string>, {
+          loading: true,
+        }),
+      ]}
+    >
+      With Tooltip
+    </Dropdown.Button>
+    <Dropdown menu={menuProps}>
+      <Button>
+        <Space>
+          Button
+          <DownOutlined />
+        </Space>
+      </Button>
+    </Dropdown>
+    <Dropdown.Button menu={menuProps} onClick={handleButtonClick} danger>
+      Danger
+    </Dropdown.Button>
+  </Space>
+);
+
+export default App;

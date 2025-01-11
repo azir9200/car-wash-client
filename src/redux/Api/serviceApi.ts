@@ -14,14 +14,14 @@ const serviceApi = baseApi.injectEndpoints({
     //get service api
     getAllService: builder.query({
       query: () => ({
-        url: "/services",
+        url: "/api/services",
         method: "GET",
       }),
     }),
     // Fetch a single product by ID
     getServiceDetails: builder.query({
       query: (id: string) => ({
-        url: `/services/${id}`,
+        url: `/api/services/${id}`,
         method: "GET",
       }),
     }),
