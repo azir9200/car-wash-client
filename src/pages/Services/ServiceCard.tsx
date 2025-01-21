@@ -1,38 +1,46 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Link } from "react-router-dom";
 
-const ServiceCard = (service: any) => {
+interface ServiceProps {
+  service: {
+    _id: string;
+    name: string;
+    description: string;
+    price: number;
+    duration: string;
+    image: string;
+  };
+}
+
+const ServiceCard: React.FC<{ service: ServiceProps["service"] }> = ({
+  service,
+}) => {
   return (
-    <div>
-      <div className="bg-white shadow-md rounded-md p-6">
-        <div className="flex ">
-          <div>
-            <h3 className="text-xl font-bold text-left">
-              {service.service.name}
-            </h3>
-            <p className="text-gray-600 text-left">
-              {service.service.description}
-            </p>
-            <p className="font-semibold text-left">
-              Price: ${service.service.price}
-            </p>
-            <p className="font-semibold text-left">
-              Duration: {service.service.duration}
-            </p>
-          </div>
-          <div className="w-4/5 justify-end">
-            <img
-              src={service.service.image}
-              className="w-full h-full rounded-tl-3xl text-end "
-            />{" "}
-          </div>
+    <div className="bg-white shadow-md rounded-md p-6 transition-transform transform hover:scale-105">
+      <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-6">
+        {/* Service Details */}
+        <div className="md:w-2/3">
+          <h3 className="text-xl font-bold">{service.name}</h3>
+          <p className="text-gray-600">{service.description}</p>
+          <p className="font-semibold">Price: ${service.price}</p>
+          <p className="font-semibold">Duration: {service.duration}</p>
         </div>
 
-        <button className=" bg-slate-500 w-full rounded-l-full">
-          {" "}
-          <Link to={`/services/${service.service._id}`}>View Details</Link>
-        </button>
+        {/* Service Image */}
+        <div className="md:w-1/3 flex justify-end">
+          <img
+            src={service.image}
+            alt={service.name}
+            className="w-full h-32 object-cover rounded-md"
+          />
+        </div>
       </div>
+
+      {/* View Details Button */}
+      <Link to={`/services/${service._id}`}>
+        <button className="mt-4 w-full bg-slate-500 text-white py-2 rounded-full hover:bg-slate-700 transition duration-300">
+          View Details
+        </button>
+      </Link>
     </div>
   );
 };

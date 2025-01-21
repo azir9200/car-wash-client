@@ -23,8 +23,9 @@ const Register: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const register = await signUp({ name, email, phone, address, password });
-      console.log("user Register", register);
+      const signup = await signUp({ name, email, phone, address, password });
+      console.log("@signup,,", signup);
+
       Swal.fire({
         position: "top-end",
         icon: "success",

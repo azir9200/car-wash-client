@@ -2,7 +2,6 @@
 import { useState } from "react";
 import { useGetAllServiceQuery } from "@/redux/Api/serviceApi";
 import ServiceCard from "./ServiceCard";
-import { useNavigate } from "react-router-dom";
 
 const Services = () => {
   const {
@@ -10,11 +9,9 @@ const Services = () => {
     isLoading,
     isError,
   } = useGetAllServiceQuery(undefined);
-  const [showAll, setShowAll] = useState(false); // Toggle state for showing all services
+  const [showAll, setShowAll] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOrder, setSortOrder] = useState("asc");
-
-  const navigate = useNavigate();
 
   if (isLoading) return <p>Loading services...</p>;
   if (isError) return <p>Error loading services.</p>;
@@ -59,11 +56,7 @@ const Services = () => {
       {/* Service List */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {servicesToShow?.map((service: any) => (
-          <ServiceCard
-            key={service._id}
-            service={service}
-            onDetailsClick={() => navigate(`/services/${service._id}`)}
-          />
+          <ServiceCard key={service._id} service={service} />
         ))}
       </div>
 

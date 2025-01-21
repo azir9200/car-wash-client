@@ -10,17 +10,22 @@ import AllReviews from "@/components/ShareHome/AllReviews";
 import ErrorPage from "@/components/ErrorPage/ErrorPage";
 import ContactPage from "@/pages/Contact/Contact";
 import About from "@/pages/About/About";
-import PaymentFailed from "@/pages/PaymentFailed/PaymentFailed";
-import ConfirmationSuccess from "@/pages/ConfimationSuccess/ConfirmationSuccess";
+import PaymentFailed from "@/pages/Payment/PaymentFailed";
 import Dashboard from "@/Layout/Dashboard";
 import UserInfo from "@/DashboardItem/UserInfo/UserInfo";
 import ProtectedRoute from "@/Layout/PrivateRoute";
+import Cart from "@/pages/Bookings/Cart";
+import PaymentSuccess from "@/pages/Payment/PaymentSuccess";
+import CreateService from "@/DashboardItem/CreateService/CreateService";
+import EditService from "@/DashboardItem/EditService/EditService";
+import ServiceList from "@/DashboardItem/EditService/ServiceList";
+import DeleteService from "@/DashboardItem/DeleteService/DeleteService";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
-    errorElement: <ErrorPage></ErrorPage>,
+    errorElement: <ErrorPage />,
     children: [
       {
         index: true,
@@ -30,9 +35,8 @@ export const router = createBrowserRouter([
         path: "allReviews",
         element: <AllReviews />,
       },
-
       {
-        path: "/services",
+        path: "services",
         element: (
           <ProtectedRoute>
             <Service />
@@ -40,52 +44,70 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: "/services/:id",
+        path: "services/:id",
         element: <ServiceDetails />,
       },
-
       {
         path: "bookings/:id",
         element: <BookingPage />,
       },
-
       {
-        path: "/contact",
+        path: "cart",
+        element: <Cart />,
+      },
+      {
+        path: "contact",
         element: <ContactPage />,
       },
       {
-        path: "/about",
+        path: "about",
         element: <About />,
       },
       {
-        path: "/login",
-        element: <Login></Login>,
+        path: "login",
+        element: <Login />,
       },
       {
-        path: "/register",
-        element: <Register></Register>,
+        path: "register",
+        element: <Register />,
       },
       {
         path: "payment/failed",
-        element: <PaymentFailed></PaymentFailed>,
+        element: <PaymentFailed />,
       },
       {
-        path: "payment/success",
-        element: <ConfirmationSuccess />,
+        path: "paymentSuccess",
+        element: <PaymentSuccess />,
       },
     ],
   },
   {
-    path: "dashboard",
+    path: "/dashboard",
     element: (
       <ProtectedRoute>
-        <Dashboard></Dashboard>
+        <Dashboard />
       </ProtectedRoute>
     ),
     children: [
       {
-        path: "user",
-        element: <UserInfo></UserInfo>,
+        index: true,
+        element: <UserInfo />,
+      },
+      {
+        path: "create",
+        element: <CreateService />,
+      },
+      {
+        path: "serviceList",
+        element: <ServiceList />,
+      },
+      {
+        path: "edit/:id",
+        element: <EditService />,
+      },
+      {
+        path: "delete/:id",
+        element: <DeleteService />,
       },
     ],
   },

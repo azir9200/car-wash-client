@@ -22,7 +22,7 @@ const Login = () => {
       console.log("user login", result);
 
       const user = verifyToken(result.data.accessToken);
-     
+
       dispatch(setUser({ user: user, token: result.data.accessToken }));
       console.log("login", user);
       if (result.success && result.data?.accessToken) {
@@ -78,15 +78,18 @@ const Login = () => {
             <div>
               <button
                 type="submit"
-                className="w-full px-4 py-2 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full text-xl px-4 py-2 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
                 Login
               </button>
             </div>
           </form>
-          <p className="text-sm text-center text-gray-600 mt-4">
+          <p className="text-xl text-center text-gray-600 mt-4">
             New here?{" "}
-            <Link to="/register" className="text-red-800 hover:underline">
+            <Link
+              to="/register"
+              className="text-red-800 text-xl hover:underline"
+            >
               register first
             </Link>
           </p>

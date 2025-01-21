@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
+import Swal from "sweetalert2";
 
 const ContactPage = () => {
   const [formData, setFormData] = useState({
@@ -8,23 +9,20 @@ const ContactPage = () => {
     phone: "",
     message: "",
   });
-  const [submitSuccess, setSubmitSuccess] = useState(false);
-  const [error, setError] = useState("");
 
   const handleChange = (e: { target: { name: any; value: any } }) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
-    // Form validation logic here (optional)
-    // Submit the form data to the backend here
-    // If successful:
-    setSubmitSuccess(true);
-    setError("");
-    // If there's an error:
-    // setError('An error occurred while sending your message.');
+  const handleSubmit = () => {
+    Swal.fire({
+      position: "top-end",
+      icon: "success",
+      title: "Your message has sent successful!",
+      showConfirmButton: false,
+      timer: 2000,
+    });
   };
 
   return (
@@ -51,13 +49,6 @@ const ContactPage = () => {
         className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
       >
         <h2 className="text-xl font-semibold mb-4">Contact Us</h2>
-        {submitSuccess && (
-          <p className="text-green-600">
-            Your message has been sent successfully!
-          </p>
-        )}
-        {error && <p className="text-red-600">{error}</p>}
-
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">
             Name

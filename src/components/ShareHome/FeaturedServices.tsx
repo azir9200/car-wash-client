@@ -31,7 +31,7 @@ const FeaturedServices = () => {
               <p className="text-gray-600 mb-6">{card.description}</p>
               {card.link && (
                 <Link
-                  to="/"
+                  to="/about"
                   className="inline-block bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-indigo-600 transition-colors"
                 >
                   Learn More

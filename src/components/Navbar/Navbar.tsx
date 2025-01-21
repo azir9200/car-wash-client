@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaBars, FaTimes } from "react-icons/fa";
-import { useSelector } from "react-redux";
-import { RootState } from "@/redux/store";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { logout } from "@/redux/features/userSlice";
 import { useGetMeQuery } from "../../redux/Api/getMeApi";
@@ -10,21 +8,19 @@ import { useGetMeQuery } from "../../redux/Api/getMeApi";
 const Navbar = () => {
   const dispatch = useAppDispatch();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const bookings = useSelector(
-    (state: RootState) => state.bookings.bookingArray
-  );
+  const services = useAppSelector((store) => store.bookings.services) || [];
   const loggedUser = useAppSelector((store) => store.user.user);
   const { data } = useGetMeQuery(undefined);
 
   const myself = data?.data;
-  
+
   const handleLogout = () => {
     dispatch(logout());
   };
 
   return (
     <nav className="bg-slate-500 p-6 fixed top-0 left-0 w-full z-50">
-      <div className="max-w-7xl mx-auto flex  items-center justify-between">
+      <div className="max-w-7xl mx-auto flex items-center justify-between">
         {/* Logo */}
         <Link to="/" className="text-white text-3xl font-bold hover:text-black">
           Car Wash
@@ -39,18 +35,11 @@ const Navbar = () => {
             Home
           </Link>
           <Link
-            to="bookings/:id"
-            className="text-white text-base font-medium hover:text-black"
-          >
-            Bookings: <span className="font-bold">{bookings.length}</span>
-          </Link>
-          <Link
             to="/services"
             className="text-white text-base font-medium hover:text-black"
           >
             Services
           </Link>
-
           <Link
             to="/contact"
             className="text-white text-base font-medium hover:text-black"
@@ -59,26 +48,28 @@ const Navbar = () => {
           </Link>
           <Link
             to="/about"
-            className="text-white  text-base font-medium hover:text-black"
+            className="text-white text-base font-medium hover:text-black"
           >
             About
           </Link>
         </div>
 
-        <div className="hidden md:flex items-center">
-          <Link
-            to="/dashboard"
-            className="bg-white text-black p-2 rounded-r-md hover:bg-slate-700 text-base font-medium"
-          >
-            Dashboard
-          </Link>
-        </div>
-
-        {/* Cart and User Icons */}
+        {/* Dashboard and User Icons */}
         <div className="hidden md:flex space-x-6 items-center">
-          {/* Authentication Buttons */}
           {loggedUser ? (
             <>
+              <Link
+                to="/cart"
+                className="text-white text-base font-medium hover:text-black pr-4"
+              >
+                Bookings: <span className="font-bold">{services.length}</span>
+              </Link>
+              <Link
+                to="/dashboard"
+                className="bg-white text-black p-2 rounded-md hover:bg-slate-700 text-base font-medium"
+              >
+                Dashboard
+              </Link>
               <button
                 onClick={handleLogout}
                 className="text-white text-base font-medium hover:text-black"
@@ -94,13 +85,6 @@ const Navbar = () => {
               Login
             </Link>
           )}
-
-          {/* // */}
-
-          {/* <span className="text-white hover:text-black">
-            <FaUser size={24} />
-          </span> */}
-          {/* <p> {myself} </p> */}
         </div>
 
         {/* Mobile Menu Button */}
@@ -130,13 +114,6 @@ const Navbar = () => {
             Services
           </Link>
           <Link
-            to="/bookings"
-            className="block text-white text-center hover:text-gray-700"
-            onClick={() => setIsMobileMenuOpen(false)}
-          >
-            Bookings
-          </Link>
-          <Link
             to="/contact"
             className="block text-white text-center hover:text-gray-700"
             onClick={() => setIsMobileMenuOpen(false)}
@@ -150,21 +127,38 @@ const Navbar = () => {
           >
             About
           </Link>
-          <Link
-            to="/cart"
-            className="block text-white text-center hover:text-gray-700"
-            onClick={() => setIsMobileMenuOpen(false)}
-          >
-            Cart
-            {/* Cart ({products}) */}
-          </Link>
-          <Link
-            to="/login"
-            className="block text-white text-center hover:text-gray-700"
-            onClick={() => setIsMobileMenuOpen(false)}
-          >
-            Account
-          </Link>
+          {loggedUser ? (
+            <>
+              <Link
+                to="/cart"
+                className="block text-white text-center hover:text-gray-700"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Bookings: <span className="font-bold">{services.length}</span>
+              </Link>
+              <Link
+                to="/dashboard"
+                className="block text-white text-center hover:text-gray-700"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Dashboard
+              </Link>
+              <button
+                onClick={handleLogout}
+                className="block text-white text-center hover:text-gray-700"
+              >
+                {myself?.name} Logout
+              </button>
+            </>
+          ) : (
+            <Link
+              to="/login"
+              className="block text-white text-center hover:text-gray-700"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Login
+            </Link>
+          )}
         </div>
       )}
     </nav>
