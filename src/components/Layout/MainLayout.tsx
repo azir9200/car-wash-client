@@ -4,12 +4,19 @@ import Footer from "../Footer/Footer";
 
 const MainLayout = () => {
   return (
-    <div className="">
-      <Navbar></Navbar>
-      <main className=" pt-16">
-        <Outlet></Outlet>
+    <div className="min-h-screen">
+      {/* Navbar */}
+      <Navbar />
+
+      {/* Main Content Area */}
+      <main className="pt-16 px-0 md:px-4">
+        <Outlet />
       </main>
-      <Footer></Footer>
+
+      {/* Footer Wrapper (Hidden on Mobile) */}
+      <div className="hidden md:block">
+        <Footer />
+      </div>
     </div>
   );
 };

@@ -11,77 +11,49 @@ const Navbar = () => {
   const services = useAppSelector((store) => store.bookings.services) || [];
   const loggedUser = useAppSelector((store) => store.user.user);
   const { data } = useGetMeQuery(undefined);
-
   const myself = data?.data;
 
   const handleLogout = () => {
     dispatch(logout());
+    setIsMobileMenuOpen(false); // Close menu on logout
   };
 
   return (
-    <nav className="bg-slate-500 p-6 fixed top-0 left-0 w-full z-50">
+    <nav className="bg-slate-500 p-5 fixed top-0 left-0 w-full z-50 shadow-md">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         {/* Logo */}
-        <Link to="/" className="text-white text-3xl font-bold hover:text-black">
+        <Link to="/" className="text-white text-2xl font-bold hover:text-black">
           Car Wash
         </Link>
 
-        {/* Desktop Links */}
+        {/* Desktop Menu */}
         <div className="hidden md:flex space-x-6 items-center">
-          <Link
-            to="/"
-            className="text-white text-base font-medium hover:text-black"
-          >
+          <Link to="/" className="nav-link">
             Home
           </Link>
-          <Link
-            to="/services"
-            className="text-white text-base font-medium hover:text-black"
-          >
+          <Link to="/services" className="nav-link">
             Services
           </Link>
-          <Link
-            to="/contact"
-            className="text-white text-base font-medium hover:text-black"
-          >
+          <Link to="/contact" className="nav-link">
             Contact
           </Link>
-          <Link
-            to="/about"
-            className="text-white text-base font-medium hover:text-black"
-          >
+          <Link to="/about" className="nav-link">
             About
           </Link>
-        </div>
-
-        {/* Dashboard and User Icons */}
-        <div className="hidden md:flex space-x-6 items-center">
           {loggedUser ? (
             <>
-              <Link
-                to="/cart"
-                className="text-white text-base font-medium hover:text-black pr-4"
-              >
+              <Link to="/cart" className="nav-link">
                 Bookings: <span className="font-bold">{services.length}</span>
               </Link>
-              <Link
-                to="/dashboard"
-                className="bg-white text-black p-2 rounded-md hover:bg-slate-700 text-base font-medium"
-              >
+              <Link to="/dashboard" className="dashboard-btn">
                 Dashboard
               </Link>
-              <button
-                onClick={handleLogout}
-                className="text-white text-base font-medium hover:text-black"
-              >
+              <button onClick={handleLogout} className="nav-link">
                 {myself?.name} Logout
               </button>
             </>
           ) : (
-            <Link
-              to="/login"
-              className="text-white text-base font-medium hover:text-black"
-            >
+            <Link to="/login" className="nav-link">
               Login
             </Link>
           )}
@@ -90,39 +62,48 @@ const Navbar = () => {
         {/* Mobile Menu Button */}
         <button
           className="md:hidden text-white"
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          onClick={() => setIsMobileMenuOpen(true)}
         >
-          {isMobileMenuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
+          <FaBars size={24} />
         </button>
       </div>
 
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className="md:hidden mt-4 space-y-4">
+        <div className="fixed inset-0 bg-black bg-opacity-90 flex flex-col items-center justify-center space-y-6 text-white text-lg z-50">
+          {/* Close Button */}
+          <button
+            className="absolute top-5 right-5"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            <FaTimes size={30} />
+          </button>
+
+          {/* Links */}
           <Link
             to="/"
-            className="block text-white text-center hover:text-gray-700"
+            className="mobile-nav-link"
             onClick={() => setIsMobileMenuOpen(false)}
           >
             Home
           </Link>
           <Link
             to="/services"
-            className="block text-white text-center hover:text-gray-700"
+            className="mobile-nav-link"
             onClick={() => setIsMobileMenuOpen(false)}
           >
             Services
           </Link>
           <Link
             to="/contact"
-            className="block text-white text-center hover:text-gray-700"
+            className="mobile-nav-link"
             onClick={() => setIsMobileMenuOpen(false)}
           >
             Contact
           </Link>
           <Link
             to="/about"
-            className="block text-white text-center hover:text-gray-700"
+            className="mobile-nav-link"
             onClick={() => setIsMobileMenuOpen(false)}
           >
             About
@@ -131,29 +112,26 @@ const Navbar = () => {
             <>
               <Link
                 to="/cart"
-                className="block text-white text-center hover:text-gray-700"
+                className="mobile-nav-link"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Bookings: <span className="font-bold">{services.length}</span>
               </Link>
               <Link
                 to="/dashboard"
-                className="block text-white text-center hover:text-gray-700"
+                className="mobile-nav-link"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Dashboard
               </Link>
-              <button
-                onClick={handleLogout}
-                className="block text-white text-center hover:text-gray-700"
-              >
+              <button onClick={handleLogout} className="mobile-nav-link">
                 {myself?.name} Logout
               </button>
             </>
           ) : (
             <Link
               to="/login"
-              className="block text-white text-center hover:text-gray-700"
+              className="mobile-nav-link"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Login
