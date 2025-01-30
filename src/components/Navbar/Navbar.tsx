@@ -27,7 +27,7 @@ const Navbar = () => {
         </Link>
 
         {/* Desktop Menu */}
-        <div className="hidden md:flex space-x-6 items-center">
+        <div className="hidden text-white font-semibold text-2xl md:flex space-x-6 items-center">
           <Link to="/" className="nav-link">
             Home
           </Link>

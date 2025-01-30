@@ -21,11 +21,11 @@ const Login = () => {
       const result = await login({ email, password }).unwrap();
       console.log("user login", result);
 
-      const user = verifyToken(result.data.accessToken);
+      const user = verifyToken(result?.data?.accessToken);
 
-      dispatch(setUser({ user: user, token: result.data.accessToken }));
+      dispatch(setUser({ user: user, token: result?.data?.accessToken }));
       console.log("login", user);
-      if (result.success && result.data?.accessToken) {
+      if (result?.success && result?.data?.accessToken) {
         Swal.fire({
           position: "top-end",
           icon: "success",

@@ -10,39 +10,59 @@ const ServiceList = () => {
 
   // Handle loading and error states
   if (isLoading) {
-    return <p>Loading services...</p>;
+    return (
+      <p className="text-center text-xl font-semibold">Loading services...</p>
+    );
   }
 
   if (isError || !services) {
-    return <p>Failed to load services.</p>;
+    return (
+      <p className="text-center text-xl text-red-500">
+        Failed to load services.
+      </p>
+    );
   }
 
   return (
-    <div>
-      <h2 className="font-bold text-3xl">Service List</h2>
-      <ul>
-        {services.map((service: any) => (
-          <div className="flex justify-between gap-8" key={service._id}>
-            <p className="text-xl text-white f px-6 py-4 bg-slate-600 my-2 rounded-md ">
-              {service.name}
-            </p>
-            <div className="">
-              <button
-                className="text-xl rounded-md bg-yellow-400 my-4 px-6 mr-6"
-                onClick={() => navigate(`/dashboard/edit/${service._id}`)}
+    <div className="p-6 bg-gray-100 min-h-screen">
+      <h2 className="font-bold text-3xl text-gray-800 mb-6 text-center">
+        Service List
+      </h2>
+
+      <div className="overflow-x-auto">
+        <table className="w-full bg-white shadow-md rounded-lg overflow-hidden">
+          <thead className="bg-gray-800 text-white uppercase text-sm sticky top-0">
+            <tr>
+              <th className="p-4 text-left">Service Name</th>
+              <th className="p-4 text-center">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {services?.map((service: any) => (
+              <tr
+                key={service?._id}
+                className="border-b hover:bg-gray-100 transition"
               >
-                Edit
-              </button>
-              <button
-                className="text-xl rounded-md bg-red-400 my-4 px-6"
-                onClick={() => navigate(`/dashboard/delete/${service._id}`)}
-              >
-                Delete
-              </button>
-            </div>
-          </div>
-        ))}
-      </ul>
+                <td className="p-4 text-gray-700 text-lg">{service?.name}</td>
+                <td className="p-4 flex justify-center gap-4">
+                  <button
+                    className="bg-yellow-400 text-white px-6 py-2 rounded-md text-sm font-semibold hover:bg-yellow-500 transition"
+                    onClick={() => navigate(`/dashboard/edit/${service?._id}`)}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    className="bg-red-500 text-white px-6 py-2 rounded-md text-sm font-semibold hover:bg-red-600 transition"
+                    onClick={() => navigate(`/dashboard/delete/${service._id}`)}
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
