@@ -2,19 +2,20 @@
 import { useState } from "react";
 import { useGetAllServiceQuery } from "@/redux/Api/serviceApi";
 import ServiceCard from "./ServiceCard";
+import Advertise from "./Advertise";
 
 const Services = () => {
   const {
     data: services,
-    isLoading,
-    isError,
+    // isLoading,
+    // isError,
   } = useGetAllServiceQuery(undefined);
   const [showAll, setShowAll] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOrder, setSortOrder] = useState("asc");
 
-  if (isLoading) return <p>Loading services...</p>;
-  if (isError) return <p>Error loading services.</p>;
+  // if (isLoading) return <p>Loading services...</p>;
+  // if (isError) return <p>Error loading services.</p>;
 
   // Filter and sort services
   const filteredServices = services?.data
@@ -33,6 +34,7 @@ const Services = () => {
   return (
     <div className="mx-auto">
       <h1 className="text-4xl font-bold mb-6">All Car Wash Services</h1>
+      <Advertise />
 
       {/* Search and Sort Section */}
       <div className="flex justify-between mb-6">
