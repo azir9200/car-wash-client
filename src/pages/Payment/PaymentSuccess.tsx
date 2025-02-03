@@ -1,4 +1,5 @@
 import { CheckCircleIcon } from "@heroicons/react/24/solid";
+import { Helmet } from "react-helmet-async";
 import { useNavigate } from "react-router-dom";
 
 const PaymentSuccess = () => {
@@ -6,6 +7,9 @@ const PaymentSuccess = () => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-green-400 via-green-500 to-green-600 text-white p-6">
+      <Helmet>
+        <title>Payment</title>
+      </Helmet>
       {/* Success Icon */}
       <CheckCircleIcon className="w-24 h-24 text-white mb-4 animate-bounce" />
 

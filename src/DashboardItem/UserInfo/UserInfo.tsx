@@ -8,8 +8,11 @@ const UserInfo = () => {
   const dispatch = useAppDispatch();
   const { data } = useGetMeQuery(undefined);
   const myself = data?.data;
+
+  // Handle logout and navigate to home
   const handleLogout = () => {
-    dispatch(logout());
+    dispatch(logout()); // Logout the user
+    navigate("/"); // Redirect to the home page after logout
   };
 
   return (

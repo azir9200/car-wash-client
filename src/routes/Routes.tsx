@@ -13,7 +13,6 @@ import About from "@/pages/About/About";
 import PaymentFailed from "@/pages/Payment/PaymentFailed";
 import Dashboard from "@/Layout/Dashboard";
 import UserInfo from "@/DashboardItem/UserInfo/UserInfo";
-import ProtectedRoute from "@/Layout/PrivateRoute";
 import Cart from "@/pages/Bookings/Cart";
 import PaymentSuccess from "@/pages/Payment/PaymentSuccess";
 import CreateService from "@/DashboardItem/CreateService/CreateService";
@@ -88,9 +87,11 @@ export const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: (
-      <ProtectedRoute>
-        <Dashboard />
-      </ProtectedRoute>
+      <Dashboard />
+
+      // <ProtectedRoute>
+      //   <Dashboard />
+      // </ProtectedRoute>
     ),
     children: [
       {

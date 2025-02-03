@@ -3,15 +3,15 @@ import { RootState } from "../store";
 
 export const baseApi = createApi({
   reducerPath: "baseApi",
+
   baseQuery: fetchBaseQuery({
     // baseUrl: "http://localhost:5000",
-    baseUrl:
-      "https://backend-deply-project-8y2cooybf-azir-uddins-projects.vercel.app",
+    baseUrl: "https://backend-deply-project.vercel.app/",
 
     credentials: "include",
     prepareHeaders: (headers, { getState }) => {
       const token = (getState() as RootState).user.token;
-
+      console.log("baseApi", token);
       if (token) {
         headers?.set("authorization", `${token}`);
       }

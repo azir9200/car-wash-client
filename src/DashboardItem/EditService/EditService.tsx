@@ -15,8 +15,8 @@ const EditService = () => {
   // Fetch service details by ID
   const {
     data: serviceResponse,
-    error,
-    isLoading: isFetching,
+    // error,
+    // isLoading: isFetching,
   } = useGetServiceDetailsQuery(id || "");
   const [editService, { isLoading }] = useEditServiceMutation();
 
@@ -37,8 +37,8 @@ const EditService = () => {
   }, [service, form]);
 
   // Show loading or error state
-  if (isFetching) return <div>Loading...</div>;
-  if (error) return <div>Error: Unable to fetch service details.</div>;
+  // if (isFetching) return <div>Loading...</div>;
+  // if (error) return <div>Error: Unable to fetch service details.</div>;
 
   // Handle form submission
   const handleSubmit = async (values: any) => {

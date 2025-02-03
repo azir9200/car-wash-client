@@ -4,24 +4,24 @@ import { useNavigate } from "react-router-dom";
 
 const ServiceList = () => {
   // Fetch all services
-  const { data, isLoading, isError } = useGetAllServiceQuery(undefined);
+  const { data } = useGetAllServiceQuery(undefined);
   const services = data?.data;
   const navigate = useNavigate();
 
-  // Handle loading and error states
-  if (isLoading) {
-    return (
-      <p className="text-center text-xl font-semibold">Loading services...</p>
-    );
-  }
+  // // Handle loading and error states
+  // if (isLoading) {
+  //   return (
+  //     <p className="text-center text-xl font-semibold">Loading services...</p>
+  //   );
+  // }
 
-  if (isError || !services) {
-    return (
-      <p className="text-center text-xl text-red-500">
-        Failed to load services.
-      </p>
-    );
-  }
+  // if (isError || !services) {
+  //   return (
+  //     <p className="text-center text-xl text-red-500">
+  //       Failed to load services.
+  //     </p>
+  //   );
+  // }
 
   return (
     <div className="p-6 bg-gray-100 min-h-screen">

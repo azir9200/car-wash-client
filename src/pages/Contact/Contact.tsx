@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
+import { Helmet } from "react-helmet-async";
 import Swal from "sweetalert2";
 
 const ContactPage = () => {
@@ -27,6 +28,9 @@ const ContactPage = () => {
 
   return (
     <div className=" mx-auto bg-green-300 p-6">
+       <Helmet>
+              <title>Contact</title>
+            </Helmet>
       <div className="text-center mb-6">
         <h1 className="text-4xl font-bold">Get in Touch</h1>
         <p className="text-lg">We'd love to hear from you!</p>

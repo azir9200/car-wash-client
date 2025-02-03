@@ -40,6 +40,21 @@ const Navbar = () => {
           <Link to="/about" className="nav-link">
             About
           </Link>
+
+          {/* <Link to="/cart" className="nav-link">
+            Bookings: <span className="font-bold">{services.length}</span>
+          </Link> */}
+          {/* <Link to="/dashboard" className="dashboard-btn">
+            Dashboard
+          </Link>
+          <button onClick={handleLogout} className="nav-link">
+            {myself?.name} Logout
+          </button>
+
+          <Link to="/login" className="nav-link">
+            Login
+          </Link> */}
+
           {loggedUser ? (
             <>
               <Link to="/cart" className="nav-link">

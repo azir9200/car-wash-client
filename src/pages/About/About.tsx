@@ -1,4 +1,5 @@
 import { useGetMeQuery } from "@/redux/Api/getMeApi";
+import { Helmet } from "react-helmet-async";
 
 const About = () => {
   const { data } = useGetMeQuery(undefined);
@@ -8,6 +9,9 @@ const About = () => {
 
   return (
     <div className="container mx-auto bg-slate-200 p-8">
+      <Helmet>
+        <title>Car-Service | About</title>
+      </Helmet>
       <h1 className="text-4xl font-bold text-center mb-8">About Us</h1>
 
       <p className="text-lg text-center mb-6">

@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useGetAllServiceQuery } from "@/redux/Api/serviceApi";
 import ServiceCard from "./ServiceCard";
 import Advertise from "./Advertise";
+import { Helmet } from "react-helmet-async";
 
 const Services = () => {
   const {
@@ -33,6 +34,9 @@ const Services = () => {
 
   return (
     <div className="mx-auto">
+      <Helmet>
+        <title>Services</title>
+      </Helmet>
       <h1 className="text-4xl font-bold mb-6">All Car Wash Services</h1>
       <Advertise />
 
